@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Covenant Ledger — Exodus 32</title>
+<style>
+  :root {
+    --bg: #f7f4ef;
+    --text: #2a2622;
+    --muted: #7a7268;
+    --accent: #8b3a2a;
+    --breach: #a33b2b;
+    --delivered: #2e6b4f;
+    --mixed: #9a7b2f;
+    --border: #d9d2c5;
+    --panel: #fffdf8;
+    --shadow: 0 1px 4px rgba(0,0,0,.08);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+  header {
+    background: var(--accent);
+    color: #fff;
+    padding: 1.2rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .5rem;
+  }
+  header h1 { font-size: 1.3rem; font-weight: normal; letter-spacing: .02em; }
+  header .sub { font-size: .85rem; opacity: .85; }
+  .toolbar {
+    display: flex; gap: .6rem; align-items: center; flex-wrap: wrap;
+    padding: .8rem 2rem;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; z-index: 10;
+  }
+  .toolbar button {
+    font-family: inherit; font-size: .85rem;
+    padding: .35rem .9rem;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    color: var(--text);
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .toolbar button.active {
+    background: var(--accent); color: #fff; border-color: var(--accent);
+  }
+  .toolbar button:hover { border-color: var(--accent); }
+  .layout {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 0;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  @media (max-width: 800px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { border-top: 1px solid var(--border); }
+  }
+  main { padding: 2rem; }
+  .verse {
+    margin-bottom: 1rem;
+    padding: .4rem .6rem;
+    border-radius: 4px;
+    transition: background .2s;
+  }
+  .verse:hover { background: rgba(139,58,42,.06); }
+  .verse .num {
+    font-size: .7rem;
+    color: var(--muted);
+    vertical-align: super;
+    margin-right: .3rem;
+  }
+  .verse.breach { border-left: 3px solid var(--breach); }
+  .verse.delivered { border-left: 3px solid var(--delivered); }
+    .verse.mixed { border-left: 3px solid var(--mixed); }
+  .verse.breach .num, .verse.delivered .num, .verse.mixed .num { font-weight: bold; }
+  .sidebar {
+    background: var(--panel);
+    border-left: 1px solid var(--border);
+    padding: 1.5rem;
+    overflow-y: auto;
+    max-height: calc(100vh - 120px);
+  }
+  .sidebar h2 {
+    font-size: 1rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+  }
+  .note {
+    margin-bottom: 1.4rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .note:last-child { border-bottom: none; }
+  .note .ref {
+    font-size: .75rem;
+    color: var(--muted);
+    font-family: monospace;
+  }
+  .note .phase {
+    display: inline-block;
+    font-size: .7rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    padding: .1rem .45rem;
+    border-radius: 3px;
+    margin-left: .4rem;
+  }
+  .phase.breach { background: #f5dcd6; color: var(--breach); }
+  .phase.delivered { background: #d6eadf; color: var(--delivered); }
+  .phase.mixed { background: #f0e6c8; color: var(--mixed); }
+  .note .field { margin-top: .5rem; font-size: .88rem; }
+  .note .field b { color: var(--muted); font-weight: normal; font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; display: block; }
+  .tag-list { display: flex; flex-wrap: wrap; gap: .3rem; margin-top: .3rem; }
+  .tag {
+    font-size: .7rem;
+    font-family: monospace;
+    background: #efebe3;
+    padding: .15rem .4rem;
+    border-radius: 3px;
+  }
+  .legend { font-size: .8rem; color: var(--muted); }
+  .legend span { margin-right: 1rem; }
+  .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: .3rem; vertical-align: middle; }
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: .75rem;
+    color: var(--muted);
+  }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Covenant Ledger</h1>
+    <div class="sub">Old Testament overlay — Exodus 32 sample</div>
+  </div>
+  <div class="legend">
+    <span><span class="dot" style="background:var(--breach)"></span>Breach</span>
+    <span><span class="dot" style="background:var(--delivered)"></span>Delivered</span>
+    <span><span class="dot" style="background:var(--mixed)"></span>Mixed</span>
+  </div>
+</header>
+
+<div class="toolbar">
+  <button class="active" data-view="read">Read</button>
+  <button data-view="overlay">Overlay</button>
+  <button data-view="ledger">Ledger Only</button>
+  <button data-view="data">Raw JSON</button>
+</div>
+
+<div class="layout">
+  <main id="reader">
+    <h2 style="font-size:1.1rem;color:var(--accent);margin-bottom:1.2rem;font-weight:normal">Exodus 32 — King James Version</h2>
+    <div id="verses"></div>
+  </main>
+  <aside class="sidebar" id="sidebar">
+    <h2>Covenant Notes</h2>
+    <div id="notes"></div>
+  </aside>
+</div>
+
+<pre id="rawjson" class="hidden" style="padding:2rem;overflow:auto;font-size:.75rem;max-height:80vh"></pre>
+
+<footer>Text: King James Version (public domain). Ledger notes: original analysis. Schema v0.1.</footer>
+
+<script>
+const TEXT = {
+"1": "And when the people saw that Moses delayed to come down out of the mount, the people gathered themselves together unto Aaron, and said unto him, Up, make us gods, which shall go before us; for as for this Moses, the man that brought us up out of the land of Egypt, we wot not what is become of him.",
+"2": "And Aaron said unto them, Break off the golden earrings, which are in the ears of your wives, of your sons, and of your daughters, and bring them unto me.",
+"3": "And all the people brake off the golden earrings which were in their ears, and brought them unto Aaron.",
+"4": "And he received them at their hand, and fashioned it with a graving tool, after he had made it a molten calf: and they said, These be thy gods, O Israel, which brought thee up out of the land of Egypt.",
+"5": "And when Aaron saw it, he built an altar before it; and Aaron made proclamation, and said, To morrow is a feast to the LORD.",
+"6": "And they rose up early on the morrow, and offered burnt offerings, and brought peace offerings; and the people sat down to eat and to drink, and rose up to play.",
+"7": "And the LORD said unto Moses, Go, get thee down; for thy people, which thou broughtest out of the land of Egypt, have corrupted themselves:",
+"8": "They have turned aside quickly out of the way which I commanded them: they have made them a molten calf, and have worshipped it, and have sacrificed thereunto, and said, These be thy gods, O Israel, which have brought thee up out of the land of Egypt.",
+"9": "And the LORD said unto Moses, I have seen this people, and, behold, it is a stiffnecked people:",
+"10": "Now therefore let me alone, that my wrath may wax hot against them, and that I may consume them: and I will make of thee a great nation.",
+"11": "And Moses besought the LORD his God, and said, LORD, why doth thy wrath wax hot against thy people, which thou hast brought forth out of the land of Egypt with great power, and with a mighty hand?",
+"12": "Wherefore should the Egyptians speak, and say, For mischief did he bring them out, to slay them in the mountains, and to consume them from the face of the earth? Turn from thy fierce wrath, and repent of this evil against thy people.",
+"13": "Remember Abraham, Isaac, and Israel, thy servants, to whom thou swarest by thine own self, and saidst unto them, I will multiply your seed as the stars of heaven, and all this land that I have spoken of will I give unto your seed, and they shall inherit it for ever.",
+"14": "And the LORD repented of the evil which he thought to do unto his people.",
+"15": "And Moses turned, and went down from the mount, and the two tables of the testimony were in his hand: the tables were written on both their sides; on the one side and on the other were they written.",
+"16": "And the tables were the work of God, and the writing was the writing of God, graven upon the tables.",
+"17": "And when Joshua heard the noise of the people as they shouted, he said unto Moses, There is a noise of war in the camp.",
+"18": "And he said, It is not the voice of them that shout for mastery, neither is it the voice of them that cry for being overcome: but the noise of them that sing do I hear.",
+"19": "And it came to pass, as soon as he came nigh unto the camp, that he saw the calf, and the dancing: and Moses' anger waxed hot, and he cast the tables out of his hands, and brake them beneath the mount.",
+"20": "And he took the calf which they had made, and burnt it in the fire, and ground it to powder, and strawed it upon the water, and made the children of Israel drink of it.",
+"21": "And Moses said unto Aaron, What did this people unto thee, that thou hast brought so great a sin upon them?",
+"22": "And Aaron said, Let not the anger of my lord wax hot: thou knowest the people, that they are set on mischief.",
+"23": "For they said unto me, Make us gods, which shall go before us: for as for this Moses, the man that brought us up out of the land of Egypt, we wot not what is become of him.",
+"24": "And I said unto them, Whosoever hath any gold, let them break it off. So they gave it me: then I cast it into the fire, and there came out this calf.",
+"25": "And when Moses saw that the people were naked; (for Aaron had made them naked unto their shame among their enemies:)",
+"26": "Then Moses stood in the gate of the camp, and said, Who is on the LORD's side? let him come unto me. And all the sons of Levi gathered themselves together unto him.",
+"27": "And he said unto them, Thus saith the LORD God of Israel, Put every man his sword by his side, and go in and out from gate to gate throughout the camp, and slay every man his brother, and every man his companion, and every man his neighbour.",
+"28": "And the children of Levi did according to the word of Moses: and there fell of the people that day about three thousand men.",
+"29": "For Moses had said, Consecrate yourselves to day to the LORD, even every man upon his son, and upon his brother; that he may bestow upon you a blessing this day.",
+"30": "And it came to pass on the morrow, that Moses said unto the people, Ye have sinned a great sin: and now I will go up unto the LORD; peradventure I shall make an atonement for your sin.",
+"31": "And Moses returned unto the LORD, and said, Oh, this people have sinned a great sin, and have made them gods of gold.",
+"32": "Yet now, if thou wilt forgive their sin—; and if not, blot me, I pray thee, out of thy book which thou hast written.",
+"33": "And the LORD said unto Moses, Whosoever hath sinned against me, him will I blot out of my book.",
+"34": "Therefore now go, lead the people unto the place of which I have spoken unto thee: behold, mine Angel shall go before thee: nevertheless in the day when I visit I will visit their sin upon them.",
+"35": "And the LORD plagued the people, because they made the calf, which Aaron made."
+ };
+
+const LEDGER = [
+  {
+    "ref": "Exod.32.1-6",
+    "covenant": "Mosaic",
+    "phase": "breach",
+    "god_obligation": "Deliver from Egypt, dwell among them, bring to the land",
+    "people_obligation": "No other gods, no graven images (Exod.20.3-4, 20.23)",
+    "event": "People demand a visible god; Aaron fashions a molten calf and proclaims a feast",
+    "broken": ["Exod.20.3", "Exod.20.4", "Exod.20.23"],
+    "divine_action": "observes, confronts",
+    "divine_character": "jealous, holy",
+    "divine_motive": "covenant fidelity; the people have 'corrupted themselves'",
+    "delivered": "Nation not destroyed; relationship continues",
+    "consequence": "God's presence threatened; judgment follows in vv. 26-35",
+    "principle": "Proximity to revelation does not prevent rapid reversion to familiar idolatry.",
+    "pattern_id": "P001",
+    "context": "Calf and bull iconography was standard for storm and fertility deities across Egypt and Canaan (Apis, Hathor, Baal). The people were not inventing a new religion but reverting to the most familiar visual language of divine power they had just left.",
+    "echoes": ["Exod.34.10-11", "Deut.9.7-21", "Acts.7.39-41", "1 Cor.10.7"],
+    "confidence": "high"
+  },
+  {
+    "ref": "Exod.32.7-14",
+    "covenant": "Mosaic + Abrahamic",
+    "phase": "intercession",
+    "god_obligation": "Make of Moses a great nation; keep Abrahamic promises",
+    "people_obligation": "(none — God proposes starting over with Moses alone)",
+    "event": "God offers to destroy Israel and raise a new nation from Moses; Moses refuses and pleads on God's reputation and the patriarchal oath",
+    "broken": [],
+    "divine_action": "proposes judgment, then relents",
+    "divine_character": "merciful, covenant-keeping, responsive to intercession",
+    "divine_motive": "for His name's sake among the Egyptians; for the patriarchs' sake (v. 13)",
+    "delivered": "Wrath restrained; nation preserved",
+    "consequence": "Judgment deferred but not cancelled — 'in the day when I visit I will visit their sin' (v. 34)",
+    "principle": "Intercession can avert covenant judgment, but it does not erase the record of breach.",
+    "pattern_id": "P001",
+    "context": "Moses' argument mirrors Near Eastern suzerainty treaty logic: a king's reputation among vassals and neighbors was at stake. Destroying Israel would make YHWH look impotent before Egypt.",
+    "echoes": ["Num.14.13-19", "Deut.9.26-29", "Ps.106.23"],
+    "confidence": "high"
+  },
+  {
+    "ref": "Exod.32.15-29",
+    "covenant": "Mosaic",
+    "phase": "judgment",
+    "god_obligation": "(judgment is the covenant's built-in enforcement)",
+    "people_obligation": "Execute the Lord's side within the camp",
+    "event": "Moses breaks the tablets, destroys the calf, and the Levites slay about three thousand men at his command",
+    "broken": ["Exod.20.3", "Exod.20.4"],
+    "divine_action": "judges through human agents",
+    "divine_character": "just, zealous",
+    "divine_motive": "covenant enforcement; holiness cannot coexist with open idolatry",
+    "delivered": "Sin confronted and partially purged within the community",
+    "consequence": "Levites consecrated to the Lord's service as a result of their zeal",
+    "principle": "Covenant breach inside the community requires internal purification, not only external rescue.",
+    "pattern_id": "P002",
+    "context": "Levites had not participated in the calf (they rallied to Moses). Their selection here prefigures their later tribal role as priests and guardians of the sanctuary.",
+    "echoes": ["Deut.33.8-11", "Mal.2.4-6"],
+    "confidence": "high"
+  },
+  {
+    "ref": "Exod.32.30-35",
+    "covenant": "Mosaic",
+    "phase": "renewal",
+    "god_obligation": "Continue leading the people; send His Angel before them",
+    "people_obligation": "(repentance implied; explicit renewal comes in ch. 34)",
+    "event": "Moses offers himself in place of the people ('blot me out of thy book'); God refuses substitution but promises continued guidance with delayed visitation of sin",
+    "broken": ["Exod.20.3"],
+    "divine_action": "refuses substitution, promises presence, defers full judgment",
+    "divine_character": "just yet patient; no one bears another's sin (v. 33)",
+    "divine_motive": "to keep His word to lead them to the land while not ignoring breach",
+    "delivered": "Journey continues; Angel goes before them",
+    "consequence": "A plague falls on the people (v. 35); the covenant is not cancelled but strained",
+    "principle": "No human substitute can absorb covenant guilt — only God Himself can.",
+    "pattern_id": "P003",
+    "context": "Moses' offer anticipates later substitutionary themes but is explicitly declined, setting up the need for a mediator who can actually bear sin — a thread the NT picks up.",
+    "echoes": ["Exod.34.1-10", "Rom.9.3", "Gal.3.13"],
+    "confidence": "medium"
+  }
+];
+
+const PATTERNS = {
+  "P001": { name: "Breach → Intercession → Partial Restoration", desc: "Rapid covenant breach followed by a mediator's plea that averts total destruction but leaves consequences in place." },
+  "P002": { name: "Internal Purification", desc: "Breach inside the covenant community requires agents within the community to enforce holiness, not outsiders." },
+  "P003": { name: "Failed Substitution", desc: "A righteous intercessor offers to bear the people's guilt; God declines, pointing forward to a substitute who can." }
+ };
+
+// Render verses
+const versesEl = document.getElementById('verses);
+const breachVerses = new Set(['1','2','3','4','5','6']);
+const deliveredVerses = new Set(['14']);
+const mixedVerses = new Set(['34','35']);
+
+for (const [num, text] of Object.entries(TEXT)) {
+  const v = document.createElement('div);
+  v.className = 'verse';
+  if (breachVerses.has(num)) v.classList.add('breach');
+  else if (deliveredVerses.has(num)) v.classList.add('delivered);
+  else if (mixedVerses.has(num)) v.classList.add('mixed);
+  v.innerHTML = `<span class="num">${num}</span>${text}`;
+  v.id = 'v' + num;
+  versesEl.appendChild(v);
+}
+
+// Render notes
+const notesEl = document.getElementById('notes);
+for (const n of LEDGER) {
+  const div = document.createElement('div);
+  div.className = 'note';
+  div.innerHTML = `
+    <div class="ref">${n.ref} <span class="phase ${n.phase}">${n.phase}</span></div>
+    <div class="field"><b>Event</b>${n.event}</div>
+    <div class="field"><b>God's obligation</b>${n.god_obligation}</div>
+    <div class="field"><b>People's obligation</b>${n.people_obligation}</div>
+    <div class="field"><b>Divine action</b>${n.divine_action}</div>
+    <div class="field"><b>Divine character</b>${n.divine_character}</div>
+    <div class="field"><b>Divine motive</b>${n.divine_motive}</div>
+    <div class="field"><b>Delivered</b>${n.delivered}</div>
+    <div class="field"><b>Consequence</b>${n.consequence}</div>
+    <div class="field"><b>Principle</b>${n.principle}</div>
+    <div class="field"><b>Pattern</b>${PATTERNS[n.pattern_id].name}</div>
+    <div class="field"><b>Context</b>${n.context}</div>
+    <div class="field"><b>Broken</b><div class="tag-list">${n.broken.map(b => `<span class="tag">${b}</span>`).join('') || '<span class="tag">—</span>'}</div></div>
+    <div class="field"><b>Echoes</b><div class="tag-list">${n.echoes.map(e => `<span class="tag">${e}</span>`).join('')}</div></div>
+    <div class="field"><b>Confidence</b>${n.confidence}</div>
+  `;
+  notesEl.appendChild(div);
+}
+
+// View switching
+document.querySelectorAll('.toolbar button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.toolbar button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active);
+    const view = btn.dataset.view;
+    document.getElementById('reader').classList.toggle('hidden', view === 'data' || view === 'ledger);
+    document.getElementById('sidebar').classList.toggle('hidden', view === 'data' || view === 'read);
+    document.getElementById('rawjson').classList.toggle('hidden', view !== 'data);
+    if (view === 'data') {
+      document.getElementById('rawjson').textContent = JSON.stringify({ text: TEXT, ledger: LEDGER, patterns: PATTERNS }, null, 2);
+    }
+  });
+});
+
+// Click a note's ref to scroll to verse
+document.querySelectorAll('.note .ref').forEach(el => {
+  el.style.cursor = 'pointer';
+  el.addEventListener('click', () => {
+    const ref = el.textContent.split(' ')[0];
+    const m = ref.match(/Exod\.32\.(\d+)/);
+    if (m) {
+      const v = document.getElementById('v' + m[1]);
+      if (v) { v.scrollIntoView({ behavior: 'smooth', block: 'center' }); v.style.background = 'rgba(139,58,42,.15)'; setTimeout(() => v.style.background = '', 1500); }
+    }
+  });
+});
+</script>
+</body>
+</html>

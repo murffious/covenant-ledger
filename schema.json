@@ -1,0 +1,34 @@
+{
+  "version": "0.1",
+  "description": "Covenant Ledger note schema for Old Testament overlay reading",
+  "fields": {
+    "ref": "Passage reference (e.g. Exod.32.1-6)",
+    "covenant": "Covenant in view: Adamic | Noahic | Abrahamic | Mosaic | Davidic | New | LDS-extension",
+    "phase": "formation | ratification | breach | judgment | intercession | renewal | fulfillment | echo",
+    "god_obligation": "What God committed to in this covenant's terms",
+    "people_obligation": "What the people committed to",
+    "event": "What actually happens in the passage",
+    "broken": "Array of specific verse references for commandments/terms breached (enables cross-canon queries)",
+    "divine_action": "Controlled verb: sustains | judges | withholds | restores | remembers | confronts | proposes | relents | refuses | observes | guides | provides",
+    "divine_character": "Attribute on display: mercy | justice | patience | jealousy | covenant-keeping | holiness | sovereignty",
+    "divine_motive": "Why, as far as the text states: for His name's sake | for the patriarchs' sake | to keep His word | covenant enforcement",
+    "delivered": "Covenant-scoped instance of divine action — the specific promise kept inside that covenant's terms",
+    "consequence": "Immediate result: blessing, warning, curse, restoration, delay",
+    "principle": "One-sentence distilled takeaway naming the recurring rule",
+    "pattern_id": "Pointer to master pattern registry (e.g. P001)",
+    "context": "Ancient Near East background — the 'world of the Bible' material that makes the principle land",
+    "echoes": "Cross-references where this event or principle recurs (Bible, Book of Mormon, D&C, NT)",
+    "confidence": "high | medium | low — distinguishes explicit textual claims from interpretive inference"
+  },
+  "pattern_registry": {
+    "P001": "Breach → Intercession → Partial Restoration",
+    "P002": "Internal Purification",
+    "P003": "Failed Substitution"
+  },
+  "controlled_vocabularies": {
+    "phase": ["formation", "ratification", "breach", "judgment", "intercession", "renewal", "fulfillment", "echo"],
+    "divine_action": ["sustains", "judges", "withholds", "restores", "remembers", "confronts", "proposes", "relents", "refuses", "observes", "guides", "provides"],
+    "divine_character": ["mercy", "justice", "patience", "jealousy", "covenant-keeping", "holiness", "sovereignty"],
+    "confidence": ["high", "medium", "low"]
+  }
+}
