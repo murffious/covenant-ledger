@@ -1,6 +1,6 @@
 {
-  "version": "0.1",
-  "description": "Covenant Ledger note schema for Old Testament overlay reading",
+  "version": "0.3",
+  "description": "Covenant Bible note schema for scripture overlay reading",
   "fields": {
     "ref": "Passage reference (e.g. Exod.32.1-6)",
     "covenant": "Covenant in view: Adamic | Noahic | Abrahamic | Mosaic | Davidic | New | LDS-extension",
@@ -15,7 +15,8 @@
     "delivered": "Covenant-scoped instance of divine action — the specific promise kept inside that covenant's terms",
     "consequence": "Immediate result: blessing, warning, curse, restoration, delay",
     "principle": "One-sentence distilled takeaway naming the recurring rule",
-    "pattern_id": "Pointer to master pattern registry (e.g. P001)",
+    "pattern": "Human-readable name of the registry pattern referenced by pattern_id (kept in sync with pattern_registry)",
+    "pattern_id": "Pointer to master pattern registry (e.g. P001). Notes whose pattern is flagged in restoration_patterns appear in Restoration (gospel) mode",
     "context": "Ancient Near East background — the 'world of the Bible' material that makes the principle land",
     "echoes": "Cross-references where this event or principle recurs (Bible, Book of Mormon, D&C, NT)",
     "confidence": "high | medium | low — distinguishes explicit textual claims from interpretive inference"
@@ -23,12 +24,60 @@
   "pattern_registry": {
     "P001": "Breach → Intercession → Partial Restoration",
     "P002": "Internal Purification",
-    "P003": "Failed Substitution"
+    "P003": "Failed Substitution",
+    "P004": "Promise of Restoration after Exile",
+    "P005": "New Covenant Written on the Heart",
+    "P006": "Forerunner before the Lord's Coming",
+    "P007": "Servant as Covenant Mediator",
+    "P008": "Divided Covenant Community",
+    "P009": "Scattering and Gathering",
+    "P010": "Judah–Joseph Dual Leadership"
   },
   "controlled_vocabularies": {
-    "phase": ["formation", "ratification", "breach", "judgment", "intercession", "renewal", "fulfillment", "echo"],
-    "divine_action": ["sustains", "judges", "withholds", "restores", "remembers", "confronts", "proposes", "relents", "refuses", "observes", "guides", "provides"],
-    "divine_character": ["mercy", "justice", "patience", "jealousy", "covenant-keeping", "holiness", "sovereignty"],
-    "confidence": ["high", "medium", "low"]
-  }
+    "phase": [
+      "formation",
+      "ratification",
+      "breach",
+      "judgment",
+      "intercession",
+      "renewal",
+      "fulfillment",
+      "echo"
+    ],
+    "divine_action": [
+      "sustains",
+      "judges",
+      "withholds",
+      "restores",
+      "remembers",
+      "confronts",
+      "proposes",
+      "relents",
+      "refuses",
+      "observes",
+      "guides",
+      "provides"
+    ],
+    "divine_character": [
+      "mercy",
+      "justice",
+      "patience",
+      "jealousy",
+      "covenant-keeping",
+      "holiness",
+      "sovereignty"
+    ],
+    "confidence": [
+      "high",
+      "medium",
+      "low"
+    ]
+  },
+  "restoration_patterns": [
+    "P004",
+    "P005",
+    "P006",
+    "P007",
+    "P009"
+  ]
 }

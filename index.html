@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Covenant Ledger — Exodus 32</title>
+<title>Covenant Bible — Exodus 32 &amp; Restoration</title>
 <style>
   :root {
     --bg: #f7f4ef;
@@ -143,13 +143,46 @@
     color: var(--muted);
   }
   .hidden { display: none !important; }
+
+  :root { --resto: #b8860b; --resto-green: #2e6b4f; --resto-bg: #fbf6e3; }
+  .toolbar button.restoration-btn { border-color: var(--resto); color: #7a5a06; }
+  .toolbar button.restoration-btn::before { content: '\2726  '; color: var(--resto); }
+  .toolbar button.restoration-btn:hover { border-color: var(--resto-green); }
+  .toolbar button.restoration-btn.active { background: linear-gradient(135deg, var(--resto), var(--resto-green)); color: #fff; border-color: var(--resto); }
+  .toolbar button.restoration-btn.active::before { color: #fff; }
+  .phase.renewal, .phase.fulfillment { background: #d6eadf; color: var(--delivered); }
+  .phase.formation { background: #f0e6c8; color: var(--mixed); }
+  .phase.judgment { background: #f5dcd6; color: var(--breach); }
+  .phase.intercession { background: #e3e0f0; color: #4a4270; }
+  .resto-badge { display: inline-block; font-size: .65rem; text-transform: uppercase; letter-spacing: .06em; padding: .1rem .45rem; border-radius: 3px; margin-left: .3rem; background: var(--resto-bg); color: #7a5a06; border: 1px solid var(--resto); font-family: Georgia, serif; }
+  .mode-restoration .note:not(.restoration-note) { display: none; }
+  .mode-restoration .note.restoration-note { border-left: 4px solid var(--resto); padding-left: .8rem; background: linear-gradient(90deg, var(--resto-bg), transparent 70%); border-bottom-color: #e8d9a8; }
+  .mode-restoration .sidebar h2 { color: var(--resto-green); }
+  .mode-restoration header { background: linear-gradient(135deg, var(--accent), #6b5a1e 60%, var(--resto-green)); }
+  #restoration { padding: 2rem; }
+  #restoration h2 { font-size: 1.1rem; color: var(--resto-green); font-weight: normal; margin-bottom: .4rem; }
+  #restoration .intro { font-size: .9rem; color: var(--muted); margin-bottom: 1.2rem; }
+  #restoration h3 { font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; color: #7a5a06; margin: 1.4rem 0 .6rem; font-weight: normal; border-bottom: 1px solid #e8d9a8; padding-bottom: .2rem; }
+  .resto-item { margin-bottom: .9rem; padding: .6rem .8rem; border-left: 3px solid var(--resto); background: var(--resto-bg); border-radius: 0 4px 4px 0; cursor: pointer; }
+  .resto-item:hover { border-left-color: var(--resto-green); }
+  .resto-item .r { font-family: monospace; font-size: .75rem; color: var(--muted); }
+  .resto-item blockquote { font-style: italic; margin: .3rem 0; font-size: .92rem; }
+  .resto-item .p { font-size: .85rem; }
+  .resto-item .nt { font-size: .75rem; color: var(--resto-green); margin-top: .2rem; }
+  #coverage { max-width: 1100px; margin: .6rem auto 0; padding: 0 2rem; font-size: .8rem; color: var(--muted); }
+  #coverage summary { cursor: pointer; }
+  #coverage table { border-collapse: collapse; margin: .5rem 0 1rem; width: 100%; }
+  #coverage th, #coverage td { text-align: left; padding: .2rem .5rem; border-bottom: 1px solid var(--border); }
+  .note.flash { background: rgba(184,134,11,.18) !important; }
+  .toolbar select { font-family: inherit; font-size: .85rem; padding: .3rem .5rem; border: 1px solid var(--border); border-radius: 4px; background: var(--panel); color: var(--text); margin-left: auto; }
+  .theme-hidden { display: none !important; }
 </style>
 </head>
 <body>
 <header>
   <div>
-    <h1>Covenant Ledger</h1>
-    <div class="sub">Old Testament overlay — Exodus 32 sample</div>
+    <h1>Covenant Bible</h1>
+    <div class="sub">Old Testament overlay — Exodus 32 sample + Restoration thread + Divided Kingdom</div>
   </div>
   <div class="legend">
     <span><span class="dot" style="background:var(--breach)"></span>Breach</span>
@@ -163,22 +196,31 @@
   <button data-view="overlay">Overlay</button>
   <button data-view="ledger">Ledger Only</button>
   <button data-view="data">Raw JSON</button>
+  <button data-view="restoration" class="restoration-btn" title="Gospel mode: restoration-themed notes only">Restoration</button>
+  <label style="margin-left:auto;font-size:.8rem;color:var(--muted)">Theme line <select id="themeLine"><option value="">All theme lines</option></select></label>
 </div>
+
+<details id="coverage"><summary>Coverage manifest</summary><div id="coverageTable"></div></details>
 
 <div class="layout">
   <main id="reader">
     <h2 style="font-size:1.1rem;color:var(--accent);margin-bottom:1.2rem;font-weight:normal">Exodus 32 — King James Version</h2>
     <div id="verses"></div>
   </main>
+  <section id="restoration" class="hidden">
+    <h2>Restoration — gospel mode</h2>
+    <div class="intro">Notes whose pattern is a restoration pattern in the registry (restoration: true). Grouped by theme line; each shows a KJV key verse and its New Testament fulfillment. Click an item to jump to its full note.</div>
+    <div id="restoThread"></div>
+  </section>
   <aside class="sidebar" id="sidebar">
-    <h2>Covenant Notes</h2>
+    <h2 id="sidebarTitle">Covenant Notes</h2>
     <div id="notes"></div>
   </aside>
 </div>
 
 <pre id="rawjson" class="hidden" style="padding:2rem;overflow:auto;font-size:.75rem;max-height:80vh"></pre>
 
-<footer>Text: King James Version (public domain). Ledger notes: original analysis. Schema v0.1.</footer>
+<footer>Text: King James Version (public domain). Ledger notes: original analysis. Schema v0.3. Book of Mormon / D&amp;C references are LDS scripture, labeled as such.</footer>
 
 <script>
 const TEXT = {
@@ -227,16 +269,26 @@ const LEDGER = [
     "god_obligation": "Deliver from Egypt, dwell among them, bring to the land",
     "people_obligation": "No other gods, no graven images (Exod.20.3-4, 20.23)",
     "event": "People demand a visible god; Aaron fashions a molten calf and proclaims a feast",
-    "broken": ["Exod.20.3", "Exod.20.4", "Exod.20.23"],
+    "broken": [
+      "Exod.20.3",
+      "Exod.20.4",
+      "Exod.20.23"
+    ],
     "divine_action": "observes, confronts",
     "divine_character": "jealous, holy",
     "divine_motive": "covenant fidelity; the people have 'corrupted themselves'",
     "delivered": "Nation not destroyed; relationship continues",
     "consequence": "God's presence threatened; judgment follows in vv. 26-35",
     "principle": "Proximity to revelation does not prevent rapid reversion to familiar idolatry.",
+    "pattern": "Breach → Intercession → Partial Restoration",
     "pattern_id": "P001",
     "context": "Calf and bull iconography was standard for storm and fertility deities across Egypt and Canaan (Apis, Hathor, Baal). The people were not inventing a new religion but reverting to the most familiar visual language of divine power they had just left.",
-    "echoes": ["Exod.34.10-11", "Deut.9.7-21", "Acts.7.39-41", "1 Cor.10.7"],
+    "echoes": [
+      "Exod.34.10-11",
+      "Deut.9.7-21",
+      "Acts.7.39-41",
+      "1 Cor.10.7"
+    ],
     "confidence": "high"
   },
   {
@@ -253,9 +305,14 @@ const LEDGER = [
     "delivered": "Wrath restrained; nation preserved",
     "consequence": "Judgment deferred but not cancelled — 'in the day when I visit I will visit their sin' (v. 34)",
     "principle": "Intercession can avert covenant judgment, but it does not erase the record of breach.",
+    "pattern": "Breach → Intercession → Partial Restoration",
     "pattern_id": "P001",
     "context": "Moses' argument mirrors Near Eastern suzerainty treaty logic: a king's reputation among vassals and neighbors was at stake. Destroying Israel would make YHWH look impotent before Egypt.",
-    "echoes": ["Num.14.13-19", "Deut.9.26-29", "Ps.106.23"],
+    "echoes": [
+      "Num.14.13-19",
+      "Deut.9.26-29",
+      "Ps.106.23"
+    ],
     "confidence": "high"
   },
   {
@@ -265,16 +322,23 @@ const LEDGER = [
     "god_obligation": "(judgment is the covenant's built-in enforcement)",
     "people_obligation": "Execute the Lord's side within the camp",
     "event": "Moses breaks the tablets, destroys the calf, and the Levites slay about three thousand men at his command",
-    "broken": ["Exod.20.3", "Exod.20.4"],
+    "broken": [
+      "Exod.20.3",
+      "Exod.20.4"
+    ],
     "divine_action": "judges through human agents",
     "divine_character": "just, zealous",
     "divine_motive": "covenant enforcement; holiness cannot coexist with open idolatry",
     "delivered": "Sin confronted and partially purged within the community",
     "consequence": "Levites consecrated to the Lord's service as a result of their zeal",
     "principle": "Covenant breach inside the community requires internal purification, not only external rescue.",
+    "pattern": "Internal Purification",
     "pattern_id": "P002",
     "context": "Levites had not participated in the calf (they rallied to Moses). Their selection here prefigures their later tribal role as priests and guardians of the sanctuary.",
-    "echoes": ["Deut.33.8-11", "Mal.2.4-6"],
+    "echoes": [
+      "Deut.33.8-11",
+      "Mal.2.4-6"
+    ],
     "confidence": "high"
   },
   {
@@ -284,50 +348,1086 @@ const LEDGER = [
     "god_obligation": "Continue leading the people; send His Angel before them",
     "people_obligation": "(repentance implied; explicit renewal comes in ch. 34)",
     "event": "Moses offers himself in place of the people ('blot me out of thy book'); God refuses substitution but promises continued guidance with delayed visitation of sin",
-    "broken": ["Exod.20.3"],
+    "broken": [
+      "Exod.20.3"
+    ],
     "divine_action": "refuses substitution, promises presence, defers full judgment",
     "divine_character": "just yet patient; no one bears another's sin (v. 33)",
     "divine_motive": "to keep His word to lead them to the land while not ignoring breach",
     "delivered": "Journey continues; Angel goes before them",
     "consequence": "A plague falls on the people (v. 35); the covenant is not cancelled but strained",
     "principle": "No human substitute can absorb covenant guilt — only God Himself can.",
+    "pattern": "Failed Substitution",
     "pattern_id": "P003",
     "context": "Moses' offer anticipates later substitutionary themes but is explicitly declined, setting up the need for a mediator who can actually bear sin — a thread the NT picks up.",
-    "echoes": ["Exod.34.1-10", "Rom.9.3", "Gal.3.13"],
+    "echoes": [
+      "Exod.34.1-10",
+      "Rom.9.3",
+      "Gal.3.13"
+    ],
     "confidence": "medium"
+  },
+  {
+    "ref": "Isa.40.1-11",
+    "covenant": "Mosaic + Abrahamic",
+    "phase": "renewal",
+    "god_obligation": "Not cast off His people forever; remember them when they are scattered (Lev.26.44-45; Deut.30.1-5)",
+    "people_obligation": "Prepare the way of the LORD; hear and trust the word that 'shall stand for ever'",
+    "event": "God commands comfort for Jerusalem: her warfare is accomplished and her iniquity pardoned (v. 2); a voice cries to prepare the LORD's way in the wilderness (v. 3); the LORD comes as a shepherd who gathers the lambs (vv. 10-11)",
+    "broken": [],
+    "divine_action": "restores, remembers",
+    "divine_character": "mercy, covenant-keeping",
+    "divine_motive": "to keep His word — 'the word of our God shall stand for ever' (v. 8)",
+    "delivered": "Pardon announced and a highway home promised after the exile the covenant curses had threatened",
+    "consequence": "Restoration: judgment declared complete, return and divine presence promised",
+    "principle": "When the covenant's discipline has done its work, God Himself announces comfort and comes to lead His people home.",
+    "pattern": "Promise of Restoration after Exile",
+    "pattern_id": "P004",
+    "context": "Isaiah 40 opens the prophecies addressed to Judah in Babylonian exile (6th century BC). Ancient Near Eastern kings built processional highways for a god's or king's triumphal entry (as on Babylon's Processional Way); here the highway is for YHWH Himself leading captives home.",
+    "echoes": [
+      "Mark.1.2-3",
+      "Matt.3.3",
+      "Luke.3.4-6",
+      "John.1.23",
+      "1 Pet.1.24-25",
+      "John.10.11"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "Isa.41.8-20",
+    "covenant": "Abrahamic",
+    "phase": "renewal",
+    "god_obligation": "Choose and not cast away the seed of Abraham; be with them and uphold them (vv. 8-10)",
+    "people_obligation": "Fear not; rejoice in the LORD and glory in the Holy One of Israel (v. 16)",
+    "event": "God addresses Israel as 'my servant' and the 'seed of Abraham my friend' (v. 8), promises to strengthen and help them (v. 10), and pledges rivers in high places and pools in the wilderness for the poor and needy (vv. 17-18)",
+    "broken": [],
+    "divine_action": "remembers, provides",
+    "divine_character": "covenant-keeping, mercy",
+    "divine_motive": "for the patriarchs' sake — Israel is the seed of Abraham His friend (v. 8)",
+    "delivered": "Election reaffirmed; wilderness provision promised as in the first exodus",
+    "consequence": "Restoration: fear replaced by assurance, desert turned to water",
+    "principle": "God's restoration rests on His original choice of Abraham, not on Israel's present strength.",
+    "pattern": "Promise of Restoration after Exile",
+    "pattern_id": "P004",
+    "context": "Water from desert places deliberately recalls Israel's wilderness provision (Exod.17.6; Num.20.11). In a world where exiled peoples assimilated and vanished, the promise that a scattered nation would be upheld 'by the right hand' was extraordinary.",
+    "echoes": [
+      "Gen.22.17",
+      "2 Chr.20.7",
+      "Jas.2.23",
+      "Luke.1.54-55",
+      "Exod.17.6"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "Isa.42.1-9",
+    "covenant": "New",
+    "phase": "formation",
+    "god_obligation": "Uphold the Servant, put His Spirit upon him, and give him 'for a covenant of the people, for a light of the Gentiles' (vv. 1, 6)",
+    "people_obligation": "(none stated — the Servant acts; the isles wait for his law, v. 4)",
+    "event": "First Servant Song: the chosen Servant brings forth judgment to the Gentiles quietly, without breaking the bruised reed (vv. 1-4), opens blind eyes and frees prisoners (v. 7); God announces 'new things' (v. 9)",
+    "broken": [],
+    "divine_action": "proposes, provides",
+    "divine_character": "mercy, sovereignty",
+    "divine_motive": "for His name's sake — 'I am the LORD: that is my name: and my glory will I not give to another' (v. 8)",
+    "delivered": "A person, not only a code, is given as the covenant",
+    "consequence": "Restoration widened to the nations; new things declared before they spring forth",
+    "principle": "God's answer to repeated covenant failure is a Servant who embodies the covenant himself.",
+    "pattern": "Servant as Covenant Mediator",
+    "pattern_id": "P007",
+    "context": "Ancient kings were installed by a deity's choice and empowerment; here the Servant's royal task (justice) is carried out with gentleness rather than conquest. Matthew applies the passage explicitly to Jesus.",
+    "echoes": [
+      "Matt.12.18-21",
+      "Matt.3.17",
+      "Luke.2.32",
+      "Luke.9.35"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "Isa.43.1-7",
+    "covenant": "Abrahamic + Mosaic",
+    "phase": "renewal",
+    "god_obligation": "Redeem, be with them through waters and fire, gather their seed from every direction (vv. 1-2, 5-6)",
+    "people_obligation": "Fear not; belong to the One who formed them (v. 1)",
+    "event": "God declares 'I have redeemed thee, I have called thee by thy name; thou art mine' (v. 1), promises presence through waters and fire (v. 2), and gathers sons and daughters from east, west, north and south (vv. 5-6)",
+    "broken": [],
+    "divine_action": "restores, remembers",
+    "divine_character": "mercy, covenant-keeping",
+    "divine_motive": "for His glory — 'I have created him for my glory' (v. 7)",
+    "delivered": "Ownership and presence reaffirmed; ingathering of the scattered promised",
+    "consequence": "Restoration: the scattered named, claimed, and brought home",
+    "principle": "Redemption is personal: God names what He claims and gathers it from wherever it was scattered.",
+    "pattern": "Promise of Restoration after Exile",
+    "pattern_id": "P004",
+    "context": "'Redeem' (ga'al) is kinsman language — the near relative who buys back family members or land (Lev.25.25). God casts Himself as Israel's next of kin obligated to buy them back.",
+    "echoes": [
+      "Deut.30.3-5",
+      "Matt.8.11",
+      "John.11.52",
+      "1 Pet.1.18-19"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "Isa.43.14-21",
+    "covenant": "Mosaic",
+    "phase": "renewal",
+    "god_obligation": "Bring down Babylon for Israel's sake and make a new way through the wilderness (vv. 14, 19)",
+    "people_obligation": "Shew forth His praise (v. 21)",
+    "event": "The God 'which maketh a way in the sea' (v. 16) tells Israel to stop looking back at the former things: 'Behold, I will do a new thing... a way in the wilderness, and rivers in the desert' (vv. 18-19)",
+    "broken": [],
+    "divine_action": "restores, provides",
+    "divine_character": "sovereignty, mercy",
+    "divine_motive": "to form a people for Himself who will show His praise (v. 21)",
+    "delivered": "A second exodus — out of Babylon — promised on the model of the first",
+    "consequence": "Restoration: the Exodus pattern reopened rather than closed",
+    "principle": "God's past deliverance is the template for, not the limit of, what He will do next.",
+    "pattern": "Promise of Restoration after Exile",
+    "pattern_id": "P004",
+    "context": "The sea crossing (Exod.14) was Israel's founding memory; telling exiles to 'remember not' the former things is deliberate rhetorical shock — the coming deliverance will eclipse it.",
+    "echoes": [
+      "Exod.14.21-22",
+      "2 Cor.5.17",
+      "Rev.21.5",
+      "1 Pet.2.9"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "Ezek.36.22-32",
+    "covenant": "New",
+    "phase": "renewal",
+    "god_obligation": "Gather Israel, cleanse them from idols, give a new heart and His own Spirit (vv. 24-27)",
+    "people_obligation": "Walk in His statutes, keep His judgments; remember their ways and loathe them (vv. 27, 31)",
+    "event": "Not for Israel's sake but for His holy name, God promises to sprinkle clean water, cleanse from all idols, give 'a new heart' and 'a new spirit', remove the stony heart, and put His Spirit within them (vv. 22-27)",
+    "broken": [
+      "Exod.20.3",
+      "Exod.20.4"
+    ],
+    "divine_action": "restores, provides",
+    "divine_character": "holiness, mercy",
+    "divine_motive": "for His name's sake — 'not for your sakes... but for mine holy name's sake' (v. 22)",
+    "delivered": "Inner transformation that makes covenant obedience possible",
+    "consequence": "Restoration: cleansing, return to the land, renewed fruitfulness (vv. 28-30)",
+    "principle": "God fixes the root of breach — the heart — rather than only its symptoms.",
+    "pattern": "New Covenant Written on the Heart",
+    "pattern_id": "P005",
+    "context": "Israel's idolatry had 'profaned' God's name among the nations (vv. 20-21), the same reputational logic Moses used in Exod.32.12. Ritual sprinkling with water (Num.19) purified from defilement; Ezekiel, a priest, applies it to the whole nation.",
+    "echoes": [
+      "2 Cor.3.3",
+      "John.3.5",
+      "Heb.10.22",
+      "Titus.3.5",
+      "Exod.32.12"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "Ezek.37.1-14",
+    "covenant": "Abrahamic",
+    "phase": "renewal",
+    "god_obligation": "Open their graves, put His Spirit in them, and place them in their own land (vv. 12-14)",
+    "people_obligation": "Hear the word of the LORD (v. 4)",
+    "event": "In the valley of dry bones Ezekiel prophesies; bones join, flesh covers them, breath enters, and 'an exceeding great army' stands (vv. 1-10). The bones are 'the whole house of Israel' who say 'our hope is lost' (v. 11)",
+    "broken": [],
+    "divine_action": "restores",
+    "divine_character": "sovereignty, mercy",
+    "divine_motive": "that they may know He is the LORD (vv. 6, 13-14)",
+    "delivered": "National life restored to a people who considered themselves dead",
+    "consequence": "Restoration: return to the land and the gift of the Spirit",
+    "principle": "No covenant people is too dead for God's Spirit to raise.",
+    "pattern": "Promise of Restoration after Exile",
+    "pattern_id": "P004",
+    "context": "Unburied bones were the ultimate curse in the ancient world (Deut.28.26; Jer.8.1-2). 'Breath', 'wind' and 'spirit' are one Hebrew word (ruach), so the vision moves from creation (Gen.2.7) to national resurrection.",
+    "echoes": [
+      "Gen.2.7",
+      "John.5.25-29",
+      "Rom.8.11",
+      "Eph.2.4-5",
+      "Rev.11.11"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "Ezek.37.15-28",
+    "covenant": "Davidic + New",
+    "phase": "renewal",
+    "god_obligation": "Join the stick of Judah and the stick of Joseph into one; make one nation with one king, David; make an everlasting covenant of peace; set His sanctuary among them for evermore (vv. 19, 22, 24, 26)",
+    "people_obligation": "No more defile themselves with idols; walk in His judgments and observe His statutes (vv. 23-24)",
+    "event": "Ezekiel writes 'For Judah' on one stick and 'For Joseph, the stick of Ephraim, and for all the house of Israel' on another and joins them in his hand (vv. 16-17, 19); God will gather Israel 'and they shall be no more two nations, neither... divided into two kingdoms any more at all' (vv. 21-22), cleanse them, set David over them, and dwell among them (vv. 23-27)",
+    "broken": [
+      "Exod.20.3",
+      "Exod.20.4"
+    ],
+    "divine_action": "restores",
+    "divine_character": "covenant-keeping, mercy",
+    "divine_motive": "that the heathen may know He sanctifies Israel (v. 28)",
+    "delivered": "End of the Judah–Joseph division begun under Jeroboam; one shepherd and permanent presence",
+    "consequence": "Restoration: one nation, one king, everlasting covenant of peace, sanctuary in their midst",
+    "principle": "The covenant's final restoration reunites the divided people under one king and one heart.",
+    "pattern": "Scattering and Gathering",
+    "pattern_id": "P009",
+    "context": "The sign-act answers the split of c. 930 BC (1 Kgs.11-12) and the fall of the north in 722 BC (2 Kgs.17). Its 'everlasting covenant of peace' and cleansing from idols (vv. 23, 26) restate the new-covenant promises of Ezek.36.26 and Jer.31.31-34, which also names 'the house of Israel, and... the house of Judah' together. LDS interpretation (LDS scripture): Latter-day Saints read the two sticks as two records — the Bible (Judah) and the Book of Mormon (Joseph, through Lehi's line of Manasseh) — growing together (2 Ne.3.12; D&C.27.5). This reading is interpretive and is not shared by other traditions.",
+    "echoes": [
+      "Jer.31.31-34",
+      "Ezek.36.26",
+      "Isa.11.13",
+      "Hos.1.11",
+      "John.10.16",
+      "2 Cor.6.16",
+      "Rev.21.3",
+      "2 Ne.3.12",
+      "D&C.27.5"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "ref": "Jer.31.1-17",
+    "covenant": "Abrahamic + Mosaic",
+    "phase": "renewal",
+    "god_obligation": "Gather Israel from the north country and the coasts of the earth; turn mourning into joy (vv. 8, 10, 13)",
+    "people_obligation": "Go up to Zion unto the LORD (v. 6)",
+    "event": "God declares 'I have loved thee with an everlasting love' (v. 3); He who scattered Israel will gather him as a shepherd (v. 10); Rachel weeps for her children, but 'thy children shall come again to their own border' (vv. 15-17)",
+    "broken": [],
+    "divine_action": "restores, remembers",
+    "divine_character": "mercy, covenant-keeping",
+    "divine_motive": "everlasting love (v. 3)",
+    "delivered": "Return of the scattered, including the northern tribes (Ephraim, v. 9)",
+    "consequence": "Restoration: mourning turned to joy, children restored",
+    "principle": "The God who scatters in judgment is the same Shepherd who gathers in love.",
+    "pattern": "Promise of Restoration after Exile",
+    "pattern_id": "P004",
+    "context": "Rachel was mother of Joseph and Benjamin, ancestress of the northern tribes; her tomb lay near Ramah, through which deportees passed (Jer.40.1). Matthew sees her weeping again at Bethlehem.",
+    "echoes": [
+      "Matt.2.17-18",
+      "John.11.52",
+      "Rom.11.26"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "Jer.31.31-34",
+    "covenant": "New",
+    "phase": "formation",
+    "god_obligation": "Make a new covenant; put His law in their inward parts and write it in their hearts; forgive iniquity and remember sin no more (vv. 33-34)",
+    "people_obligation": "Know the LORD — 'they shall all know me, from the least of them unto the greatest' (v. 34)",
+    "event": "God announces a new covenant with Israel and Judah, 'not according to the covenant that I made with their fathers... which my covenant they brake' (vv. 31-32)",
+    "broken": [
+      "Exod.19.5"
+    ],
+    "divine_action": "proposes, restores",
+    "divine_character": "mercy, covenant-keeping",
+    "divine_motive": "to keep His word — 'and will be their God, and they shall be my people' (v. 33)",
+    "delivered": "A covenant whose terms are internalized and whose sins are forgiven",
+    "consequence": "Restoration: universal knowledge of God and full forgiveness",
+    "principle": "Where tablets of stone were broken, God promises to write His law on hearts.",
+    "pattern": "New Covenant Written on the Heart",
+    "pattern_id": "P005",
+    "context": "Treaty texts in the ancient Near East were inscribed on stone or tablets and stored in temples — as the Sinai tablets were, and as Moses broke them in Exod.32.19. Jeremiah promises inscription on the heart instead. This is the only OT passage to use the phrase 'new covenant'.",
+    "echoes": [
+      "Heb.8.8-12",
+      "Heb.10.16-17",
+      "Luke.22.20",
+      "1 Cor.11.25",
+      "2 Cor.3.6",
+      "Rom.11.27",
+      "Exod.32.19"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "Mal.3.1-6",
+    "covenant": "Mosaic + New",
+    "phase": "renewal",
+    "god_obligation": "Send His messenger to prepare the way; come suddenly to His temple as the messenger of the covenant; purify the sons of Levi (vv. 1-3)",
+    "people_obligation": "Offer an offering in righteousness (v. 3); abide the day of His coming",
+    "event": "God promises a forerunner, then His own coming as a refiner's fire and fuller's soap who purifies the sons of Levi 'as gold and silver' (vv. 1-3); 'I am the LORD, I change not; therefore ye sons of Jacob are not consumed' (v. 6)",
+    "broken": [],
+    "divine_action": "judges, restores",
+    "divine_character": "holiness, covenant-keeping",
+    "divine_motive": "to keep His word — 'I change not' (v. 6)",
+    "delivered": "Purification of the priesthood so offerings are again 'pleasant unto the LORD, as in the days of old' (v. 4)",
+    "consequence": "Refining that preserves rather than consumes",
+    "principle": "The Lord's coming refines His covenant people before it restores them.",
+    "pattern": "Forerunner before the Lord's Coming",
+    "pattern_id": "P006",
+    "context": "Silversmiths heated ore until dross separated and the refiner could see his reflection; fullers bleached cloth with lye. The purifying of Levi recalls Levi's original consecration in Exod.32.26-29 and the covenant with Levi in Mal.2.4-6.",
+    "echoes": [
+      "Mark.1.2",
+      "Matt.11.10",
+      "Luke.7.27",
+      "Exod.32.26-29",
+      "Mal.2.4-6",
+      "3 Ne.24.1-3",
+      "D&C.128.24"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "Mal.4.1-4",
+    "covenant": "Mosaic",
+    "phase": "judgment",
+    "god_obligation": "Burn up the proud and wicked; cause the Sun of righteousness to arise with healing for those who fear His name (vv. 1-2)",
+    "people_obligation": "Fear His name; 'Remember ye the law of Moses my servant... in Horeb' (v. 4)",
+    "event": "The day of the LORD burns as an oven for the wicked, while for the God-fearing 'the Sun of righteousness' arises 'with healing in his wings' (vv. 1-2); Israel is told to remember the law given at Horeb (v. 4)",
+    "broken": [],
+    "divine_action": "judges, restores",
+    "divine_character": "justice, mercy",
+    "divine_motive": "covenant enforcement for the proud; healing for those who fear His name",
+    "delivered": "Healing and freedom for the faithful ('grow up as calves of the stall', v. 2)",
+    "consequence": "Separation of righteous and wicked; restoration for the faithful remnant",
+    "principle": "The same day that ends the covenant-breaker's story restores the covenant-keeper's.",
+    "pattern": "Promise of Restoration after Exile",
+    "pattern_id": "P004",
+    "context": "Winged sun-disks were common royal and divine symbols in Egypt and Mesopotamia; Malachi repurposes the image for YHWH's healing righteousness. The call back to Horeb ties the last OT prophecy to the Sinai covenant of Exod.19-20.",
+    "echoes": [
+      "Luke.1.78-79",
+      "Matt.13.41-43",
+      "3 Ne.25.1-4",
+      "Exod.19.5"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "Mal.4.5-6",
+    "covenant": "Abrahamic + New",
+    "phase": "renewal",
+    "god_obligation": "Send Elijah the prophet before the great and dreadful day of the LORD (v. 5)",
+    "people_obligation": "Turn hearts — fathers to children and children to fathers (v. 6)",
+    "event": "The Old Testament closes with the promise of Elijah's return to turn the hearts of the generations to one another, 'lest I come and smite the earth with a curse' (vv. 5-6)",
+    "broken": [],
+    "divine_action": "restores, remembers",
+    "divine_character": "mercy, covenant-keeping",
+    "divine_motive": "for the patriarchs' sake — preserving the covenant line of the fathers",
+    "delivered": "A forerunner sent so that the day of the LORD brings blessing rather than curse",
+    "consequence": "Curse averted for those whose hearts are turned",
+    "principle": "Before God comes in judgment, He sends a forerunner to reconnect the generations to the covenant.",
+    "pattern": "Forerunner before the Lord's Coming",
+    "pattern_id": "P006",
+    "context": "Elijah had confronted Israel's apostasy and was taken up without dying (2 Kgs.2.11), so his return became a fixed Jewish expectation (a cup is still poured for him at Passover). Jesus identifies John the Baptist as the Elijah who was to come. LDS scripture (LDS reading) records Elijah's appearance in the Kirtland Temple in 1836 to restore the sealing keys (D&C.110.13-16; D&C.2.1-3).",
+    "echoes": [
+      "Matt.11.14",
+      "Matt.17.10-13",
+      "Mark.9.11-13",
+      "Luke.1.17",
+      "3 Ne.25.5-6",
+      "D&C.110.13-16",
+      "D&C.2.1-3"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "Mark.1.1-8",
+    "covenant": "New",
+    "phase": "fulfillment",
+    "god_obligation": "Send the messenger before the Lord's face (Mal.3.1; Isa.40.3)",
+    "people_obligation": "Repent and be baptized for the remission of sins (v. 4)",
+    "event": "Mark opens the gospel by fusing Mal.3.1 and Isa.40.3 and identifying John the Baptist, preaching in the wilderness, as the promised forerunner of one mightier who will baptize with the Holy Ghost (vv. 2-8)",
+    "broken": [],
+    "divine_action": "guides, restores",
+    "divine_character": "covenant-keeping, mercy",
+    "divine_motive": "to keep His word given through the prophets",
+    "delivered": "The forerunner arrives as promised",
+    "consequence": "Fulfillment: preparation complete; the Lord's coming begins",
+    "principle": "God's forerunner promises are kept literally and in sequence.",
+    "pattern": "Forerunner before the Lord's Coming",
+    "pattern_id": "P006",
+    "context": "John's camel-hair garment and leather girdle (v. 6) deliberately echo Elijah's dress (2 Kgs.1.8). The Jordan wilderness setting replays Israel's entry into the land.",
+    "echoes": [
+      "Isa.40.3",
+      "Mal.3.1",
+      "Mal.4.5",
+      "2 Kgs.1.8",
+      "Matt.3.1-12",
+      "John.1.19-23"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "Matt.12.15-21",
+    "covenant": "New",
+    "phase": "fulfillment",
+    "god_obligation": "Put His Spirit on the chosen Servant who shows judgment to the Gentiles (v. 18)",
+    "people_obligation": "Trust in his name — 'in his name shall the Gentiles trust' (v. 21)",
+    "event": "Jesus heals the multitudes and charges them not to make him known; Matthew quotes Isa.42.1-4 as fulfilled in him (vv. 15-21)",
+    "broken": [],
+    "divine_action": "provides, restores",
+    "divine_character": "mercy",
+    "divine_motive": "to keep His word spoken by Isaiah (v. 17)",
+    "delivered": "The Servant appears, gentle with the bruised reed",
+    "consequence": "Fulfillment: the Servant's mission extends hope to the Gentiles",
+    "principle": "The Servant's restoration comes through quiet mercy before it comes through public victory.",
+    "pattern": "Servant as Covenant Mediator",
+    "pattern_id": "P007",
+    "context": "Matthew's citation follows neither the Hebrew nor the Greek exactly, adapting the text to Jesus' withdrawal from conflict with the Pharisees (v. 14).",
+    "echoes": [
+      "Isa.42.1-4",
+      "Matt.3.17",
+      "Matt.17.5"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "Luke.22.19-20",
+    "covenant": "New",
+    "phase": "fulfillment",
+    "god_obligation": "Ratify the new covenant in Christ's blood, shed for His people",
+    "people_obligation": "'This do in remembrance of me' (v. 19)",
+    "event": "At the Last Supper Jesus gives bread as his body and the cup as 'the new testament in my blood, which is shed for you' (vv. 19-20)",
+    "broken": [],
+    "divine_action": "provides, restores",
+    "divine_character": "mercy, covenant-keeping",
+    "divine_motive": "to keep His word — the new covenant promised in Jer.31.31",
+    "delivered": "The new covenant of Jer.31 inaugurated, with forgiveness of sins",
+    "consequence": "Fulfillment: the substitute who can bear covenant guilt is given",
+    "principle": "The new covenant is ratified by the blood of the one substitute who can actually bear sin.",
+    "pattern": "New Covenant Written on the Heart",
+    "pattern_id": "P005",
+    "context": "'Testament' translates diatheke, 'covenant'. The words echo Moses' 'blood of the covenant' at Sinai (Exod.24.8) and answer Moses' declined offer to be blotted out for the people (Exod.32.32-33).",
+    "echoes": [
+      "Jer.31.31-34",
+      "Exod.24.8",
+      "1 Cor.11.25",
+      "Heb.9.15",
+      "Exod.32.32-33"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "Gen.48.1-22",
+    "covenant": "Abrahamic",
+    "phase": "formation",
+    "god_obligation": "Make Jacob's seed fruitful and a multitude of people; give the land as an everlasting possession (vv. 3-4)",
+    "people_obligation": "Carry the name of Abraham and Isaac forward (v. 16)",
+    "event": "Jacob adopts Joseph's sons Ephraim and Manasseh as his own, 'as Reuben and Simeon' (v. 5), crosses his hands to put the younger Ephraim before Manasseh (vv. 14, 19-20), and gives Joseph a portion above his brethren (v. 22)",
+    "broken": [],
+    "divine_action": "guides, provides",
+    "divine_character": "sovereignty, covenant-keeping",
+    "divine_motive": "to keep His word to Abraham, Isaac and Jacob (vv. 3-4, 15-16)",
+    "delivered": "Joseph receives a double portion through two tribes",
+    "consequence": "Ephraim set ahead of Manasseh; Joseph's line becomes two tribes",
+    "principle": "God's covenant choice repeatedly runs through the younger son, not the expected one.",
+    "pattern": "Judah–Joseph Dual Leadership",
+    "pattern_id": "P010",
+    "context": "Adoption by a grandfather to transfer inheritance is attested in ancient Near Eastern family law (e.g. Nuzi). The double portion is the firstborn's share (Deut.21.17), confirming 1 Chr.5.1-2: Reuben's birthright went to Joseph's sons, while Judah prevailed as ruler.",
+    "echoes": [
+      "1 Chr.5.1-2",
+      "Heb.11.21",
+      "Jer.31.9",
+      "Gen.49.22-26"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "Gen.49.8-26",
+    "covenant": "Abrahamic",
+    "phase": "formation",
+    "god_obligation": "Keep the sceptre in Judah 'until Shiloh come'; bless Joseph with blessings of heaven and of the deep (vv. 10, 25)",
+    "people_obligation": "(blessing pronounced; obligations implied by each tribe's calling)",
+    "event": "Jacob blesses Judah as the lion whose sceptre will not depart (vv. 8-10) and Joseph as 'a fruitful bough by a well; whose branches run over the wall' (vv. 22-26)",
+    "broken": [],
+    "divine_action": "guides, provides",
+    "divine_character": "sovereignty",
+    "divine_motive": "for the patriarchs' sake — 'the blessings of thy father have prevailed above the blessings of my progenitors' (v. 26)",
+    "delivered": "Royal destiny for Judah; abundance and reach for Joseph",
+    "consequence": "Two leading lines established for all later history",
+    "principle": "Judah receives the rule and Joseph the fruitfulness; the covenant story needs both.",
+    "pattern": "Judah–Joseph Dual Leadership",
+    "pattern_id": "P010",
+    "context": "Deathbed blessings carried legal and prophetic weight in the patriarchal world. Christians read Gen.49.10 messianically (Rev.5.5). LDS interpretation (LDS scripture): Joseph's branches 'over the wall' are read as Lehi's descendants crossing the sea (1 Ne.15.12; Jacob.2.25).",
+    "echoes": [
+      "Rev.5.5",
+      "Heb.7.14",
+      "Deut.33.13-17",
+      "1 Ne.15.12",
+      "Jacob.2.25"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "ref": "1 Kgs.11.29-39",
+    "covenant": "Davidic + Mosaic",
+    "phase": "judgment",
+    "god_obligation": "Keep one tribe for David's sake and Jerusalem's; build Jeroboam a sure house if he obeys (vv. 32, 38)",
+    "people_obligation": "Walk in God's ways and keep His statutes as David did (v. 38)",
+    "event": "Because Solomon turned to other gods, the prophet Ahijah tears his new garment into twelve pieces and gives ten to Jeroboam: the kingdom will be split (vv. 29-35)",
+    "broken": [
+      "Exod.20.3",
+      "Deut.17.17"
+    ],
+    "divine_action": "judges, remembers",
+    "divine_character": "justice, covenant-keeping",
+    "divine_motive": "for David's sake and for Jerusalem's sake (vv. 32, 34, 36)",
+    "delivered": "The Davidic line keeps Judah; 'a light alway before me in Jerusalem' (v. 36)",
+    "consequence": "Division of the kingdom c. 930 BC; 'I will for this afflict the seed of David, but not for ever' (v. 39)",
+    "principle": "God divides a covenant people in judgment but preserves a line for the sake of His promise.",
+    "pattern": "Divided Covenant Community",
+    "pattern_id": "P008",
+    "context": "Tearing a garment was a symbolic act of loss of kingship (cf. 1 Sam.15.27-28). Solomon's foreign wives and shrines (1 Kgs.11.1-8) broke the king's law in Deut.17.17. The split (1 Kgs.12.16-20) left Rehoboam with Judah (and Benjamin) in the south; Jeroboam ruled the ten northern tribes, later from Samaria (1 Kgs.16.24).",
+    "echoes": [
+      "1 Kgs.12.16-20",
+      "2 Chr.10.15",
+      "Ezek.37.22",
+      "Hos.1.11"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "1 Kgs.12.25-33",
+    "covenant": "Mosaic",
+    "phase": "breach",
+    "god_obligation": "Deliver from Egypt, dwell among them in the place He chose",
+    "people_obligation": "No other gods, no graven images; worship at the place God chooses (Exod.20.3-4; Deut.12.5)",
+    "event": "Jeroboam sets up two golden calves at Bethel and Dan and proclaims, 'behold thy gods, O Israel, which brought thee up out of the land of Egypt' (v. 28), with non-Levite priests and his own feast (vv. 31-32)",
+    "broken": [
+      "Exod.20.3",
+      "Exod.20.4",
+      "Deut.12.5"
+    ],
+    "divine_action": "observes, confronts",
+    "divine_character": "jealousy, holiness",
+    "divine_motive": "covenant enforcement",
+    "delivered": "Prophets sent to confront the breach (1 Kgs.13.1-3)",
+    "consequence": "'This thing became a sin' (v. 30); 'the sin of Jeroboam' marks every northern king until the fall (2 Kgs.17.21-22)",
+    "principle": "A divided covenant people reaches for the same idolatry that broke the covenant at Sinai.",
+    "pattern": "Divided Covenant Community",
+    "pattern_id": "P008",
+    "context": "Jeroboam's proclamation repeats Aaron's words almost verbatim (Exod.32.4, 8) — a deliberate replay of the Sinai breach (see Exod.32.1-6, pattern P001). Bull imagery may have been meant as YHWH's pedestal, but the text treats it as the golden calf again. Like Aaron, he also replaces the Levites, the very tribe consecrated in Exod.32.26-29.",
+    "echoes": [
+      "Exod.32.4",
+      "Exod.32.8",
+      "Exod.32.1-6",
+      "Hos.8.5-6",
+      "Hos.10.5",
+      "2 Kgs.17.16"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "Hos.5.5-14",
+    "covenant": "Mosaic",
+    "phase": "judgment",
+    "god_obligation": "(covenant enforcement against both kingdoms)",
+    "people_obligation": "Seek the LORD's face and acknowledge their offence (v. 15)",
+    "event": "Hosea addresses both kingdoms side by side: 'Israel and Ephraim shall fall in their iniquity; Judah also shall fall with them' (v. 5); God will be 'as a lion unto Ephraim, and as a young lion to the house of Judah' (v. 14)",
+    "broken": [
+      "Exod.20.3"
+    ],
+    "divine_action": "judges, withholds",
+    "divine_character": "justice, jealousy",
+    "divine_motive": "covenant enforcement; 'till they acknowledge their offence' (v. 15)",
+    "delivered": "Warning given to both kingdoms before judgment falls",
+    "consequence": "Ephraim turns to Assyria for help that cannot heal (v. 13)",
+    "principle": "Parallel covenant communities are judged by the same covenant, whatever their rivalry.",
+    "pattern": "Divided Covenant Community",
+    "pattern_id": "P008",
+    "context": "Hosea prophesied in the north in the decades before Samaria fell (c. 750–722 BC), naming kings of Judah and Israel (Hos.1.1). The Syro-Ephraimite war (2 Kgs.16.5; Isa.7) had set the kingdoms against each other.",
+    "echoes": [
+      "Isa.9.21",
+      "Isa.7.1-9",
+      "2 Kgs.16.5",
+      "Hos.1.11"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "2 Kgs.17.6-23",
+    "covenant": "Mosaic",
+    "phase": "judgment",
+    "god_obligation": "Enforce the covenant curse of exile after warning by the prophets (v. 13; Deut.28.64)",
+    "people_obligation": "Keep His commandments and statutes; turn from their evil ways (v. 13)",
+    "event": "In the ninth year of Hoshea (722 BC) Assyria takes Samaria and carries Israel away (v. 6); the writer lists the causes — other gods, images, the two calves, and refusing the prophets (vv. 7-17); 'there was none left but the tribe of Judah only' (v. 18)",
+    "broken": [
+      "Exod.20.3",
+      "Exod.20.4",
+      "Deut.12.5"
+    ],
+    "divine_action": "judges",
+    "divine_character": "justice, patience",
+    "divine_motive": "covenant enforcement, after long patience through 'all the prophets' (v. 13)",
+    "delivered": "Repeated prophetic warnings before the end",
+    "consequence": "Northern kingdom scattered; Judah remains — but 'Judah kept not the commandments' either (v. 19)",
+    "principle": "Persistent breach, unanswered by repentance, ends in the scattering the covenant warned of.",
+    "pattern": "Divided Covenant Community",
+    "pattern_id": "P008",
+    "context": "Assyrian policy deported conquered elites and resettled foreigners in their place (v. 24), producing the mixed population of Samaria. The northern tribes are thereafter 'scattered', the backdrop for later gathering prophecies (Isa.11.12; Ezek.37.15-22).",
+    "echoes": [
+      "Deut.28.64",
+      "Hos.8.5-6",
+      "Isa.11.12",
+      "Ezek.37.21-22",
+      "Jer.31.9"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "2 Kgs.24.17-25.21",
+    "covenant": "Mosaic + Davidic",
+    "phase": "judgment",
+    "god_obligation": "Enforce exile as with the north; keep a Davidic remnant (2 Kgs.25.27-30)",
+    "people_obligation": "Hear the prophets; Jeremiah urged Zedekiah to submit to Babylon (Jer.38.17-18)",
+    "event": "Zedekiah, installed by Babylon in 597 BC, rebels; Jerusalem is besieged, the city falls, the temple is burned, and Judah is carried away in 586 BC (2 Kgs.25.1-21; Jer.39.1-10)",
+    "broken": [
+      "Exod.20.3",
+      "Exod.19.5"
+    ],
+    "divine_action": "judges",
+    "divine_character": "justice, patience",
+    "divine_motive": "covenant enforcement",
+    "delivered": "A remnant survives; Jehoiachin is later released in Babylon (2 Kgs.25.27-30)",
+    "consequence": "Both branches of the divided kingdom now in exile; Davidic hope survives only in promise",
+    "principle": "Judah, though spared longer, falls to the same covenant terms that ended the north.",
+    "pattern": "Divided Covenant Community",
+    "pattern_id": "P008",
+    "context": "Babylon (Nebuchadnezzar) took Jehoiachin in 597 BC and made Zedekiah king (2 Kgs.24.15-17). Jeremiah 37–39 gives the inside view of the siege. Both kingdoms now stand where Lev.26 and Deut.28 said breach would end.",
+    "echoes": [
+      "Jer.37.1-2",
+      "Jer.39.1-10",
+      "2 Chr.36.11-21",
+      "Lev.26.33",
+      "Ezek.37.21-22"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "1 Ne.1.4-2.4",
+    "covenant": "Abrahamic + LDS-extension",
+    "phase": "renewal",
+    "god_obligation": "Warn Lehi and lead his family out before Jerusalem's destruction (1 Ne.2.2)",
+    "people_obligation": "Obey the command to depart; keep the commandments (1 Ne.2.1-4)",
+    "event": "LDS scripture: in the first year of Zedekiah (c. 600 BC) Lehi prophesies Jerusalem's destruction, is rejected, and is commanded in a dream to take his family into the wilderness (1 Ne.1.4-20; 2.1-4)",
+    "broken": [],
+    "divine_action": "guides, provides",
+    "divine_character": "mercy, covenant-keeping",
+    "divine_motive": "for the patriarchs' sake — preserving a branch of Joseph (Gen.49.22)",
+    "delivered": "A Manasseh/Joseph family is preserved outside the land as Judah falls",
+    "consequence": "Around 600 BC three covenant communities exist concurrently: Judah under Zedekiah heading to 586 BC, the northern tribes scattered since 722 BC, and Lehi's branch of Joseph leaving Jerusalem",
+    "principle": "As judgment falls, God preserves branches of the covenant people in more than one place.",
+    "pattern": "Divided Covenant Community",
+    "pattern_id": "P008",
+    "context": "LDS scripture (Book of Mormon), not part of the Bible: Lehi is identified as 'a descendant of Manasseh, who was the son of Joseph' (Alma.10.3) and as 'a descendant of Joseph' (1 Ne.5.14). The dating ties to the biblical accession of Zedekiah (2 Kgs.24.17-18; Jer.37.1). Confidence medium: the narrative is canonical for Latter-day Saints but has no external corroboration.",
+    "echoes": [
+      "Alma.10.3",
+      "1 Ne.5.14",
+      "2 Kgs.24.17-18",
+      "Jer.37.1",
+      "Gen.49.22",
+      "2 Ne.3.4-5"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "ref": "Ps.78.67-72",
+    "covenant": "Davidic",
+    "phase": "ratification",
+    "god_obligation": "Choose Judah, Mount Zion, and David to shepherd Israel (vv. 68-71)",
+    "people_obligation": "(Ps 78 recounts Israel's failure to keep covenant, vv. 10, 56-58)",
+    "event": "God 'refused the tabernacle of Joseph, and chose not the tribe of Ephraim: But chose the tribe of Judah, the mount Zion which he loved' and took David from the sheepfolds (vv. 67-70)",
+    "broken": [],
+    "divine_action": "guides",
+    "divine_character": "sovereignty",
+    "divine_motive": "His love for Zion (v. 68)",
+    "delivered": "A shepherd-king for all Israel",
+    "consequence": "Leadership shifts from Ephraim (Shiloh) to Judah (Zion)",
+    "principle": "Ephraim, Manasseh and Judah dominate prophetic language because birthright, northern dominance and royal rule were divided among them.",
+    "pattern": "Judah–Joseph Dual Leadership",
+    "pattern_id": "P010",
+    "context": "Shiloh, in Ephraim, held the tabernacle until its loss (v. 60; Jer.7.12). Judah held the Davidic throne; Ephraim was the leading northern tribe and stands for the whole north; Manasseh was Joseph's other son (in LDS scripture, Lehi's line). Key places naming them together: Gen.48; Gen.49.8-10, 22-26; 1 Chr.5.1-2; Ps.60.7 / Ps.108.8; Ps.78.67-68; Isa.9.21; Isa.11.13; Hos.5.5-14; Ezek.37.16-19.",
+    "echoes": [
+      "Gen.48.19-20",
+      "Gen.49.10",
+      "1 Chr.5.1-2",
+      "Ps.60.7",
+      "Ps.108.8",
+      "Isa.9.21",
+      "Isa.11.13",
+      "Hos.5.5-14",
+      "Ezek.37.16-19"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "Isa.11.11-13",
+    "covenant": "Abrahamic + Davidic",
+    "phase": "renewal",
+    "god_obligation": "Recover the remnant 'the second time', set up an ensign, gather the outcasts of Israel and the dispersed of Judah (vv. 11-12)",
+    "people_obligation": "Gather to the ensign raised by the root of Jesse (v. 10)",
+    "event": "The Lord recovers His people a second time from Assyria, Egypt and the isles; 'The envy also of Ephraim shall depart... Ephraim shall not envy Judah, and Judah shall not vex Ephraim' (vv. 11-13)",
+    "broken": [],
+    "divine_action": "restores",
+    "divine_character": "covenant-keeping, mercy",
+    "divine_motive": "to keep His word to David — the root of Jesse (v. 10)",
+    "delivered": "Gathering of both branches and an end to their rivalry",
+    "consequence": "Restoration: Ephraim and Judah reconciled",
+    "principle": "True gathering heals the rivalry between the branches, not only their distance from the land.",
+    "pattern": "Scattering and Gathering",
+    "pattern_id": "P009",
+    "context": "Written while the kingdoms were enemies (Isa.7; 9.21). 'The second time' implies a second exodus after the first from Egypt (v. 16). LDS interpretation (LDS scripture): the 'ensign' and second gathering are read as latter-day (2 Ne.21.11-12; 2 Ne.29.1).",
+    "echoes": [
+      "Isa.9.21",
+      "Rom.15.12",
+      "John.11.52",
+      "2 Ne.21.11-12",
+      "2 Ne.29.1"
+    ],
+    "confidence": "high"
   }
 ];
 
 const PATTERNS = {
-  "P001": { name: "Breach → Intercession → Partial Restoration", desc: "Rapid covenant breach followed by a mediator's plea that averts total destruction but leaves consequences in place." },
-  "P002": { name: "Internal Purification", desc: "Breach inside the covenant community requires agents within the community to enforce holiness, not outsiders." },
-  "P003": { name: "Failed Substitution", desc: "A righteous intercessor offers to bear the people's guilt; God declines, pointing forward to a substitute who can." }
- };
+  "P001": {
+    "name": "Breach → Intercession → Partial Restoration",
+    "desc": "Rapid covenant breach followed by a mediator's plea that averts total destruction but leaves consequences in place."
+  },
+  "P002": {
+    "name": "Internal Purification",
+    "desc": "Breach inside the covenant community requires agents within the community to enforce holiness, not outsiders."
+  },
+  "P003": {
+    "name": "Failed Substitution",
+    "desc": "A righteous intercessor offers to bear the people's guilt; God declines, pointing forward to a substitute who can."
+  },
+  "P004": {
+    "name": "Promise of Restoration after Exile",
+    "desc": "Judgment and scattering are not God's last word: after covenant curses fall, He promises to regather, heal, and resettle His people for His own name's sake.",
+    "restoration": true
+  },
+  "P005": {
+    "name": "New Covenant Written on the Heart",
+    "desc": "The external, breakable covenant (stone tablets) is answered by an internal one: God Himself writes the law on the heart and gives a new spirit, making obedience possible.",
+    "restoration": true
+  },
+  "P006": {
+    "name": "Forerunner before the Lord's Coming",
+    "desc": "God sends a preparatory messenger (a voice in the wilderness, Elijah) to turn hearts and clear the way before He comes to His people.",
+    "restoration": true
+  },
+  "P007": {
+    "name": "Servant as Covenant Mediator",
+    "desc": "God appoints a chosen Servant, endowed with His Spirit, who is himself 'a covenant of the people' and a light to the Gentiles.",
+    "restoration": true
+  },
+  "P008": {
+    "name": "Divided Covenant Community",
+    "desc": "One covenant people splits into parallel communities (Israel/Ephraim and Judah, later a Lehite branch) whose covenant performance runs side by side and is judged on the same terms."
+  },
+  "P009": {
+    "name": "Scattering and Gathering",
+    "desc": "Covenant breach scatters the tribes among the nations; God promises to gather the outcasts of Israel and the dispersed of Judah and make them one again.",
+    "restoration": true
+  },
+  "P010": {
+    "name": "Judah–Joseph Dual Leadership",
+    "desc": "Leadership in Israel is split between Judah (royal sceptre, Davidic line) and Joseph (birthright, through Ephraim and Manasseh); later prophecy names these three tribes together when speaking of division and reunion."
+  }
+};
+
+// Restoration (gospel mode) rule: a note is restoration-themed when its pattern_id
+// points at a registry entry flagged restoration: true.
+const isRestoration = n => !!(PATTERNS[n.pattern_id] && PATTERNS[n.pattern_id].restoration);
+
+// KJV key verse per restoration note (display only; not part of the note schema)
+const KEY_VERSES = {
+  "Isa.40.1-11": {
+    "ref": "Isaiah 40:1",
+    "text": "Comfort ye, comfort ye my people, saith your God."
+  },
+  "Isa.41.8-20": {
+    "ref": "Isaiah 41:10",
+    "text": "Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness."
+  },
+  "Isa.42.1-9": {
+    "ref": "Isaiah 42:6",
+    "text": "I the LORD have called thee in righteousness, and will hold thine hand, and will keep thee, and give thee for a covenant of the people, for a light of the Gentiles;"
+  },
+  "Isa.43.1-7": {
+    "ref": "Isaiah 43:1",
+    "text": "But now thus saith the LORD that created thee, O Jacob, and he that formed thee, O Israel, Fear not: for I have redeemed thee, I have called thee by thy name; thou art mine."
+  },
+  "Isa.43.14-21": {
+    "ref": "Isaiah 43:19",
+    "text": "Behold, I will do a new thing; now it shall spring forth; shall ye not know it? I will even make a way in the wilderness, and rivers in the desert."
+  },
+  "Ezek.36.22-32": {
+    "ref": "Ezekiel 36:26",
+    "text": "A new heart also will I give you, and a new spirit will I put within you: and I will take away the stony heart out of your flesh, and I will give you an heart of flesh."
+  },
+  "Ezek.37.1-14": {
+    "ref": "Ezekiel 37:5",
+    "text": "Thus saith the Lord GOD unto these bones; Behold, I will cause breath to enter into you, and ye shall live:"
+  },
+  "Ezek.37.15-28": {
+    "ref": "Ezekiel 37:22",
+    "text": "And I will make them one nation in the land upon the mountains of Israel; and one king shall be king to them all: and they shall be no more two nations, neither shall they be divided into two kingdoms any more at all:"
+  },
+  "Jer.31.1-17": {
+    "ref": "Jeremiah 31:3",
+    "text": "The LORD hath appeared of old unto me, saying, Yea, I have loved thee with an everlasting love: therefore with lovingkindness have I drawn thee."
+  },
+  "Jer.31.31-34": {
+    "ref": "Jeremiah 31:33",
+    "text": "But this shall be the covenant that I will make with the house of Israel; After those days, saith the LORD, I will put my law in their inward parts, and write it in their hearts; and will be their God, and they shall be my people."
+  },
+  "Mal.3.1-6": {
+    "ref": "Malachi 3:1",
+    "text": "Behold, I will send my messenger, and he shall prepare the way before me: and the Lord, whom ye seek, shall suddenly come to his temple, even the messenger of the covenant, whom ye delight in: behold, he shall come, saith the LORD of hosts."
+  },
+  "Mal.4.1-4": {
+    "ref": "Malachi 4:2",
+    "text": "But unto you that fear my name shall the Sun of righteousness arise with healing in his wings; and ye shall go forth, and grow up as calves of the stall."
+  },
+  "Mal.4.5-6": {
+    "ref": "Malachi 4:5-6",
+    "text": "Behold, I will send you Elijah the prophet before the coming of the great and dreadful day of the LORD: And he shall turn the heart of the fathers to the children, and the heart of the children to their fathers, lest I come and smite the earth with a curse."
+  },
+  "Mark.1.1-8": {
+    "ref": "Mark 1:2-3",
+    "text": "As it is written in the prophets, Behold, I send my messenger before thy face, which shall prepare thy way before thee. The voice of one crying in the wilderness, Prepare ye the way of the Lord, make his paths straight."
+  },
+  "Matt.12.15-21": {
+    "ref": "Matthew 12:18",
+    "text": "Behold my servant, whom I have chosen; my beloved, in whom my soul is well pleased: I will put my spirit upon him, and he shall shew judgment to the Gentiles."
+  },
+  "Luke.22.19-20": {
+    "ref": "Luke 22:20",
+    "text": "Likewise also the cup after supper, saying, This cup is the new testament in my blood, which is shed for you."
+  },
+  "Isa.11.11-13": {
+    "ref": "Isaiah 11:12",
+    "text": "And he shall set up an ensign for the nations, and shall assemble the outcasts of Israel, and gather together the dispersed of Judah from the four corners of the earth."
+  }
+};
+
+// Coverage manifest (mirrors manifest.json)
+const MANIFEST = {
+  "schema_version": "0.3",
+  "books": [
+    {
+      "book": "Genesis",
+      "abbrev": "Gen",
+      "canon": "OT",
+      "chapters_total": 50,
+      "chapters_covered": [
+        48,
+        49
+      ],
+      "chapter_coverage_pct": 4.0,
+      "notes": 2,
+      "restoration_notes": 0,
+      "status": "partial"
+    },
+    {
+      "book": "Exodus",
+      "abbrev": "Exod",
+      "canon": "OT",
+      "chapters_total": 40,
+      "chapters_covered": [
+        32
+      ],
+      "chapter_coverage_pct": 2.5,
+      "notes": 4,
+      "restoration_notes": 0,
+      "status": "sample"
+    },
+    {
+      "book": "1 Kings",
+      "abbrev": "1 Kgs",
+      "canon": "OT",
+      "chapters_total": 22,
+      "chapters_covered": [
+        11,
+        12
+      ],
+      "chapter_coverage_pct": 9.1,
+      "notes": 2,
+      "restoration_notes": 0,
+      "status": "partial"
+    },
+    {
+      "book": "2 Kings",
+      "abbrev": "2 Kgs",
+      "canon": "OT",
+      "chapters_total": 25,
+      "chapters_covered": [
+        17,
+        24,
+        25
+      ],
+      "chapter_coverage_pct": 12.0,
+      "notes": 2,
+      "restoration_notes": 0,
+      "status": "partial"
+    },
+    {
+      "book": "Psalms",
+      "abbrev": "Ps",
+      "canon": "OT",
+      "chapters_total": 150,
+      "chapters_covered": [
+        78
+      ],
+      "chapter_coverage_pct": 0.7,
+      "notes": 1,
+      "restoration_notes": 0,
+      "status": "partial"
+    },
+    {
+      "book": "Isaiah",
+      "abbrev": "Isa",
+      "canon": "OT",
+      "chapters_total": 66,
+      "chapters_covered": [
+        11,
+        40,
+        41,
+        42,
+        43
+      ],
+      "chapter_coverage_pct": 7.6,
+      "notes": 6,
+      "restoration_notes": 6,
+      "status": "partial"
+    },
+    {
+      "book": "Jeremiah",
+      "abbrev": "Jer",
+      "canon": "OT",
+      "chapters_total": 52,
+      "chapters_covered": [
+        31
+      ],
+      "chapter_coverage_pct": 1.9,
+      "notes": 2,
+      "restoration_notes": 2,
+      "status": "partial"
+    },
+    {
+      "book": "Ezekiel",
+      "abbrev": "Ezek",
+      "canon": "OT",
+      "chapters_total": 48,
+      "chapters_covered": [
+        36,
+        37
+      ],
+      "chapter_coverage_pct": 4.2,
+      "notes": 3,
+      "restoration_notes": 3,
+      "status": "partial"
+    },
+    {
+      "book": "Hosea",
+      "abbrev": "Hos",
+      "canon": "OT",
+      "chapters_total": 14,
+      "chapters_covered": [
+        5
+      ],
+      "chapter_coverage_pct": 7.1,
+      "notes": 1,
+      "restoration_notes": 0,
+      "status": "partial"
+    },
+    {
+      "book": "Malachi",
+      "abbrev": "Mal",
+      "canon": "OT",
+      "chapters_total": 4,
+      "chapters_covered": [
+        3,
+        4
+      ],
+      "chapter_coverage_pct": 50.0,
+      "notes": 3,
+      "restoration_notes": 3,
+      "status": "partial"
+    },
+    {
+      "book": "Matthew",
+      "abbrev": "Matt",
+      "canon": "NT",
+      "chapters_total": 28,
+      "chapters_covered": [
+        12
+      ],
+      "chapter_coverage_pct": 3.6,
+      "notes": 1,
+      "restoration_notes": 1,
+      "status": "partial"
+    },
+    {
+      "book": "Mark",
+      "abbrev": "Mark",
+      "canon": "NT",
+      "chapters_total": 16,
+      "chapters_covered": [
+        1
+      ],
+      "chapter_coverage_pct": 6.2,
+      "notes": 1,
+      "restoration_notes": 1,
+      "status": "partial"
+    },
+    {
+      "book": "Luke",
+      "abbrev": "Luke",
+      "canon": "NT",
+      "chapters_total": 24,
+      "chapters_covered": [
+        22
+      ],
+      "chapter_coverage_pct": 4.2,
+      "notes": 1,
+      "restoration_notes": 1,
+      "status": "partial"
+    },
+    {
+      "book": "1 Nephi",
+      "abbrev": "1 Ne",
+      "canon": "Book of Mormon (LDS scripture)",
+      "chapters_total": 22,
+      "chapters_covered": [
+        1,
+        2
+      ],
+      "chapter_coverage_pct": 9.1,
+      "notes": 1,
+      "restoration_notes": 0,
+      "status": "partial"
+    }
+  ]
+};
 
 // Render verses
-const versesEl = document.getElementById('verses);
+const versesEl = document.getElementById('verses');
 const breachVerses = new Set(['1','2','3','4','5','6']);
 const deliveredVerses = new Set(['14']);
 const mixedVerses = new Set(['34','35']);
 
 for (const [num, text] of Object.entries(TEXT)) {
-  const v = document.createElement('div);
+  const v = document.createElement('div');
   v.className = 'verse';
   if (breachVerses.has(num)) v.classList.add('breach');
-  else if (deliveredVerses.has(num)) v.classList.add('delivered);
-  else if (mixedVerses.has(num)) v.classList.add('mixed);
+  else if (deliveredVerses.has(num)) v.classList.add('delivered');
+  else if (mixedVerses.has(num)) v.classList.add('mixed');
   v.innerHTML = `<span class="num">${num}</span>${text}`;
   v.id = 'v' + num;
   versesEl.appendChild(v);
 }
 
 // Render notes
-const notesEl = document.getElementById('notes);
+const noteId = ref => 'note-' + ref.replace(/[^A-Za-z0-9]+/g, '-');
+const notesEl = document.getElementById('notes');
 for (const n of LEDGER) {
-  const div = document.createElement('div);
+  const div = document.createElement('div');
   div.className = 'note';
+  if (isRestoration(n)) div.classList.add('restoration-note');
+  div.id = noteId(n.ref);
+  div.dataset.pattern = n.pattern_id;
   div.innerHTML = `
-    <div class="ref">${n.ref} <span class="phase ${n.phase}">${n.phase}</span></div>
+    <div class="ref">${n.ref} <span class="phase ${n.phase}">${n.phase}</span>${isRestoration(n) ? '<span class="resto-badge">Restoration</span>' : ''}</div>
     <div class="field"><b>Event</b>${n.event}</div>
     <div class="field"><b>God's obligation</b>${n.god_obligation}</div>
     <div class="field"><b>People's obligation</b>${n.people_obligation}</div>
@@ -337,7 +1437,7 @@ for (const n of LEDGER) {
     <div class="field"><b>Delivered</b>${n.delivered}</div>
     <div class="field"><b>Consequence</b>${n.consequence}</div>
     <div class="field"><b>Principle</b>${n.principle}</div>
-    <div class="field"><b>Pattern</b>${PATTERNS[n.pattern_id].name}</div>
+    <div class="field"><b>Pattern</b>${n.pattern || PATTERNS[n.pattern_id].name} <span class="tag">${n.pattern_id}</span></div>
     <div class="field"><b>Context</b>${n.context}</div>
     <div class="field"><b>Broken</b><div class="tag-list">${n.broken.map(b => `<span class="tag">${b}</span>`).join('') || '<span class="tag">—</span>'}</div></div>
     <div class="field"><b>Echoes</b><div class="tag-list">${n.echoes.map(e => `<span class="tag">${e}</span>`).join('')}</div></div>
@@ -346,17 +1446,67 @@ for (const n of LEDGER) {
   notesEl.appendChild(div);
 }
 
+// Restoration thread (gospel mode main panel), grouped by theme line (pattern)
+const restoEl = document.getElementById('restoThread');
+for (const [pid, p] of Object.entries(PATTERNS)) {
+  if (!p.restoration) continue;
+  const items = LEDGER.filter(n => n.pattern_id === pid);
+  if (!items.length) continue;
+  const g = document.createElement('div');
+  g.className = 'resto-group'; g.dataset.pattern = pid;
+  g.innerHTML = `<h3>${pid} · ${p.name}</h3>`;
+  for (const n of items) {
+    const kv = KEY_VERSES[n.ref];
+    const nt = n.echoes.filter(e => /^(Matt|Mark|Luke|John|Acts|Rom|1 Cor|2 Cor|Gal|Eph|Phil|Col|Heb|Jas|1 Pet|2 Pet|Rev|Titus)\./.test(e));
+    const it = document.createElement('div');
+    it.className = 'resto-item';
+    it.innerHTML = `<div class="r">${n.ref} · ${n.covenant} · ${n.phase}</div>` +
+      (kv ? `<blockquote>“${kv.text}” <span class="r">(${kv.ref}, KJV)</span></blockquote>` : '') +
+      `<div class="p">${n.principle}</div>` +
+      (nt.length ? `<div class="nt">NT: ${nt.join(', ')}</div>` : '');
+    it.addEventListener('click', () => {
+      const el = document.getElementById(noteId(n.ref));
+      if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); el.classList.add('flash'); setTimeout(() => el.classList.remove('flash'), 1500); }
+    });
+    g.appendChild(it);
+  }
+  restoEl.appendChild(g);
+}
+
+// Coverage manifest table
+document.getElementById('coverageTable').innerHTML = '<table><tr><th>Book</th><th>Canon</th><th>Chapters covered</th><th>Coverage</th><th>Notes</th><th>Restoration</th><th>Status</th></tr>' +
+  MANIFEST.books.map(b => `<tr><td>${b.book}</td><td>${b.canon}</td><td>${b.chapters_covered.join(', ')}</td><td>${b.chapter_coverage_pct}% of ${b.chapters_total}</td><td>${b.notes}</td><td>${b.restoration_notes}</td><td>${b.status}</td></tr>`).join('') + '</table>';
+
+// Theme lines: filter notes in any view by pattern_id (registry entry)
+const themeSel = document.getElementById('themeLine');
+for (const [id, p] of Object.entries(PATTERNS)) {
+  const o = document.createElement('option');
+  o.value = id; o.textContent = `${id} — ${p.name}${p.restoration ? ' ✦' : ''}`;
+  themeSel.appendChild(o);
+}
+function applyThemeLine() {
+  const id = themeSel.value;
+  document.querySelectorAll('.note').forEach(el => el.classList.toggle('theme-hidden', !!id && el.dataset.pattern !== id));
+  document.querySelectorAll('.resto-group').forEach(el => el.classList.toggle('theme-hidden', !!id && el.dataset.pattern !== id));
+}
+themeSel.addEventListener('change', applyThemeLine);
+
 // View switching
 document.querySelectorAll('.toolbar button').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.toolbar button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active);
+    btn.classList.add('active');
     const view = btn.dataset.view;
-    document.getElementById('reader').classList.toggle('hidden', view === 'data' || view === 'ledger);
-    document.getElementById('sidebar').classList.toggle('hidden', view === 'data' || view === 'read);
-    document.getElementById('rawjson').classList.toggle('hidden', view !== 'data);
+    const resto = view === 'restoration';
+    document.body.classList.toggle('mode-restoration', resto);
+    document.body.dataset.view = view;
+    document.getElementById('reader').classList.toggle('hidden', view === 'data' || view === 'ledger' || resto);
+    document.getElementById('restoration').classList.toggle('hidden', !resto);
+    document.getElementById('sidebar').classList.toggle('hidden', view === 'data' || view === 'read');
+    document.getElementById('rawjson').classList.toggle('hidden', view !== 'data');
+    document.getElementById('sidebarTitle').textContent = resto ? 'Restoration Notes' : 'Covenant Notes';
     if (view === 'data') {
-      document.getElementById('rawjson').textContent = JSON.stringify({ text: TEXT, ledger: LEDGER, patterns: PATTERNS }, null, 2);
+      document.getElementById('rawjson').textContent = JSON.stringify({ text: TEXT, ledger: LEDGER, patterns: PATTERNS, key_verses: KEY_VERSES, manifest: MANIFEST }, null, 2);
     }
   });
 });

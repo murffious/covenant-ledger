@@ -1,0 +1,198 @@
+{
+  "schema_version": "0.3",
+  "books": [
+    {
+      "book": "Genesis",
+      "abbrev": "Gen",
+      "canon": "OT",
+      "chapters_total": 50,
+      "chapters_covered": [
+        48,
+        49
+      ],
+      "chapter_coverage_pct": 4.0,
+      "notes": 2,
+      "restoration_notes": 0,
+      "status": "partial"
+    },
+    {
+      "book": "Exodus",
+      "abbrev": "Exod",
+      "canon": "OT",
+      "chapters_total": 40,
+      "chapters_covered": [
+        32
+      ],
+      "chapter_coverage_pct": 2.5,
+      "notes": 4,
+      "restoration_notes": 0,
+      "status": "sample"
+    },
+    {
+      "book": "1 Kings",
+      "abbrev": "1 Kgs",
+      "canon": "OT",
+      "chapters_total": 22,
+      "chapters_covered": [
+        11,
+        12
+      ],
+      "chapter_coverage_pct": 9.1,
+      "notes": 2,
+      "restoration_notes": 0,
+      "status": "partial"
+    },
+    {
+      "book": "2 Kings",
+      "abbrev": "2 Kgs",
+      "canon": "OT",
+      "chapters_total": 25,
+      "chapters_covered": [
+        17,
+        24,
+        25
+      ],
+      "chapter_coverage_pct": 12.0,
+      "notes": 2,
+      "restoration_notes": 0,
+      "status": "partial"
+    },
+    {
+      "book": "Psalms",
+      "abbrev": "Ps",
+      "canon": "OT",
+      "chapters_total": 150,
+      "chapters_covered": [
+        78
+      ],
+      "chapter_coverage_pct": 0.7,
+      "notes": 1,
+      "restoration_notes": 0,
+      "status": "partial"
+    },
+    {
+      "book": "Isaiah",
+      "abbrev": "Isa",
+      "canon": "OT",
+      "chapters_total": 66,
+      "chapters_covered": [
+        11,
+        40,
+        41,
+        42,
+        43
+      ],
+      "chapter_coverage_pct": 7.6,
+      "notes": 6,
+      "restoration_notes": 6,
+      "status": "partial"
+    },
+    {
+      "book": "Jeremiah",
+      "abbrev": "Jer",
+      "canon": "OT",
+      "chapters_total": 52,
+      "chapters_covered": [
+        31
+      ],
+      "chapter_coverage_pct": 1.9,
+      "notes": 2,
+      "restoration_notes": 2,
+      "status": "partial"
+    },
+    {
+      "book": "Ezekiel",
+      "abbrev": "Ezek",
+      "canon": "OT",
+      "chapters_total": 48,
+      "chapters_covered": [
+        36,
+        37
+      ],
+      "chapter_coverage_pct": 4.2,
+      "notes": 3,
+      "restoration_notes": 3,
+      "status": "partial"
+    },
+    {
+      "book": "Hosea",
+      "abbrev": "Hos",
+      "canon": "OT",
+      "chapters_total": 14,
+      "chapters_covered": [
+        5
+      ],
+      "chapter_coverage_pct": 7.1,
+      "notes": 1,
+      "restoration_notes": 0,
+      "status": "partial"
+    },
+    {
+      "book": "Malachi",
+      "abbrev": "Mal",
+      "canon": "OT",
+      "chapters_total": 4,
+      "chapters_covered": [
+        3,
+        4
+      ],
+      "chapter_coverage_pct": 50.0,
+      "notes": 3,
+      "restoration_notes": 3,
+      "status": "partial"
+    },
+    {
+      "book": "Matthew",
+      "abbrev": "Matt",
+      "canon": "NT",
+      "chapters_total": 28,
+      "chapters_covered": [
+        12
+      ],
+      "chapter_coverage_pct": 3.6,
+      "notes": 1,
+      "restoration_notes": 1,
+      "status": "partial"
+    },
+    {
+      "book": "Mark",
+      "abbrev": "Mark",
+      "canon": "NT",
+      "chapters_total": 16,
+      "chapters_covered": [
+        1
+      ],
+      "chapter_coverage_pct": 6.2,
+      "notes": 1,
+      "restoration_notes": 1,
+      "status": "partial"
+    },
+    {
+      "book": "Luke",
+      "abbrev": "Luke",
+      "canon": "NT",
+      "chapters_total": 24,
+      "chapters_covered": [
+        22
+      ],
+      "chapter_coverage_pct": 4.2,
+      "notes": 1,
+      "restoration_notes": 1,
+      "status": "partial"
+    },
+    {
+      "book": "1 Nephi",
+      "abbrev": "1 Ne",
+      "canon": "Book of Mormon (LDS scripture)",
+      "chapters_total": 22,
+      "chapters_covered": [
+        1,
+        2
+      ],
+      "chapter_coverage_pct": 9.1,
+      "notes": 1,
+      "restoration_notes": 0,
+      "status": "partial"
+    }
+  ]
+}
