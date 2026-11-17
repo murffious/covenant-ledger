@@ -8,11 +8,12 @@
       "chapters_total": 50,
       "chapters_covered": [
         48,
-        49
+        49,
+        50
       ],
-      "chapter_coverage_pct": 4.0,
-      "notes": 2,
-      "restoration_notes": 0,
+      "chapter_coverage_pct": 6.0,
+      "notes": 4,
+      "restoration_notes": 2,
       "status": "partial"
     },
     {
@@ -80,11 +81,12 @@
         40,
         41,
         42,
-        43
+        43,
+        65
       ],
-      "chapter_coverage_pct": 7.6,
-      "notes": 6,
-      "restoration_notes": 6,
+      "chapter_coverage_pct": 9.1,
+      "notes": 7,
+      "restoration_notes": 7,
       "status": "partial"
     },
     {
@@ -192,6 +194,33 @@
       "chapter_coverage_pct": 9.1,
       "notes": 1,
       "restoration_notes": 0,
+      "status": "partial"
+    },
+    {
+      "book": "Jacob",
+      "abbrev": "Jacob",
+      "canon": "Book of Mormon (LDS scripture)",
+      "chapters_total": 7,
+      "chapters_covered": [
+        4,
+        5
+      ],
+      "chapter_coverage_pct": 28.6,
+      "notes": 2,
+      "restoration_notes": 2,
+      "status": "partial"
+    },
+    {
+      "book": "2 Nephi",
+      "abbrev": "2 Ne",
+      "canon": "Book of Mormon (LDS scripture)",
+      "chapters_total": 33,
+      "chapters_covered": [
+        10
+      ],
+      "chapter_coverage_pct": 3.0,
+      "notes": 1,
+      "restoration_notes": 1,
       "status": "partial"
     }
   ]

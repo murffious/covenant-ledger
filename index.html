@@ -169,6 +169,12 @@
   .resto-item blockquote { font-style: italic; margin: .3rem 0; font-size: .92rem; }
   .resto-item .p { font-size: .85rem; }
   .resto-item .nt { font-size: .75rem; color: var(--resto-green); margin-top: .2rem; }
+  .resto-item .bd { font-size: .84rem; margin-top: .35rem; }
+  #bookBase { margin: 0 0 1.4rem; padding: .2rem 0 0; }
+  #bookBase .q { font-style: italic; border-left: 3px solid var(--resto); padding: .4rem .8rem; background: var(--resto-bg); border-radius: 0 4px 4px 0; margin: .4rem 0 1rem; }
+  #bookBase ol, #bookBase ul { margin: 0 0 1rem 1.1rem; }
+  #bookBase li { margin: .35rem 0; font-size: .9rem; }
+  #bookBase li b { font-weight: normal; color: #7a5a06; }
   #coverage { max-width: 1100px; margin: .6rem auto 0; padding: 0 2rem; font-size: .8rem; color: var(--muted); }
   #coverage summary { cursor: pointer; }
   #coverage table { border-collapse: collapse; margin: .5rem 0 1rem; width: 100%; }
@@ -182,7 +188,7 @@
 <header>
   <div>
     <h1>Covenant Bible</h1>
-    <div class="sub">Old Testament overlay — Exodus 32 sample + Restoration thread + Divided Kingdom</div>
+    <div class="sub">Old Testament overlay — Exodus 32 sample, divided kingdom, and the restoration thread from Abiding in the Covenant</div>
   </div>
   <div class="legend">
     <span><span class="dot" style="background:var(--breach)"></span>Breach</span>
@@ -209,7 +215,8 @@
   </main>
   <section id="restoration" class="hidden">
     <h2>Restoration — gospel mode</h2>
-    <div class="intro">Notes whose pattern is a restoration pattern in the registry (restoration: true). Grouped by theme line; each shows a KJV key verse and its New Testament fulfillment. Click an item to jump to its full note.</div>
+    <div class="intro">Read from Abiding in the Covenant: A House of Israel Story. The chain and the thirteen beats are that book’s account of how a people build again after they reject the stone. Notes stay grouped by restoration pattern. Each one keeps a key line and adds the book’s detail. Click a note to open the full ledger entry.</div>
+    <div id="bookBase"></div>
     <div id="restoThread"></div>
   </section>
   <aside class="sidebar" id="sidebar">
@@ -220,7 +227,7 @@
 
 <pre id="rawjson" class="hidden" style="padding:2rem;overflow:auto;font-size:.75rem;max-height:80vh"></pre>
 
-<footer>Text: King James Version (public domain). Ledger notes: original analysis. Schema v0.3. Book of Mormon / D&amp;C references are LDS scripture, labeled as such.</footer>
+<footer>Text: King James Version (public domain). Restoration detail follows Abiding in the Covenant; Book of Mormon and JST lines there are paraphrased and labeled. Ledger notes: original analysis. Schema v0.3.</footer>
 
 <script>
 const TEXT = {
@@ -492,6 +499,31 @@ const LEDGER = [
       "2 Cor.5.17",
       "Rev.21.5",
       "1 Pet.2.9"
+    ],
+    "confidence": "high"
+  },
+  {
+    "ref": "Isa.65.8-9",
+    "covenant": "Abrahamic",
+    "phase": "renewal",
+    "god_obligation": "Refuse to destroy the whole cluster when a blessing is still in it; bring a seed out of Jacob (vv. 8-9)",
+    "people_obligation": "Be the servants for whose sake the cluster is spared (v. 8)",
+    "event": "The cluster looks fit to destroy. Someone says, 'Destroy it not; for a blessing is in it.' God answers that He will do the same for His servants' sake, and will bring forth a seed out of Jacob (vv. 8-9)",
+    "broken": [],
+    "divine_action": "relents, restores",
+    "divine_character": "mercy, covenant-keeping",
+    "divine_motive": "for his servants' sakes, that he may not destroy them all (v. 8)",
+    "delivered": "A remnant spared inside a vineyard that had brought forth wild grapes",
+    "consequence": "Restoration: the ruined vine is not the end of Jacob's seed",
+    "principle": "God refuses the total destruction of a people when a blessing is still hidden in the cluster.",
+    "pattern": "Promise of Restoration after Exile",
+    "pattern_id": "P004",
+    "context": "Isaiah 5 planted the vineyard and, when it yielded wild grapes, took away the hedge. Isaiah 65:8 is the turn Abiding in the Covenant holds on that image: the wood looks dead, and a voice stops the axe because new wine is still in the cluster. The book's remnant branch — carried out of the broken vineyard and sprouting in a foreign city — is this verse seen.",
+    "echoes": [
+      "Isa.5.1-7",
+      "Isa.1.9",
+      "Rom.9.27-29",
+      "Rom.11.5"
     ],
     "confidence": "high"
   },
@@ -842,7 +874,58 @@ const LEDGER = [
       "Heb.7.14",
       "Deut.33.13-17",
       "1 Ne.15.12",
-      "Jacob.2.25"
+      "Jacob.2.25",
+      "2 Ne.10.7"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "ref": "JST Gen.48.7-11",
+    "covenant": "Abrahamic + LDS-extension",
+    "phase": "formation",
+    "god_obligation": "Bless the fruit of Joseph's loins above his brethren, and make that seed a light to Israel in the days of captivity",
+    "people_obligation": "The house bows, in the end, to the deliverance that comes through Joseph's line",
+    "event": "LDS scripture (Joseph Smith Translation): Jacob tells Joseph that God raised him to save the house from death in the famine, and that his seed will likewise deliver Israel in the days of their captivity and bring salvation when they are bowed down under sin",
+    "broken": [],
+    "divine_action": "provides, restores",
+    "divine_character": "covenant-keeping, mercy",
+    "divine_motive": "for the patriarchs' sake — the oath sworn at Luz, carried through the son who saved the family",
+    "delivered": "A promise that Joseph's temporal salvation of the family becomes his seed's spiritual salvation of Israel",
+    "consequence": "Ephraim and Manasseh are not only extra tribes; their line is appointed to a latter deliverance",
+    "principle": "The son who kept the family alive in famine is made the pattern of the deliverance still to come.",
+    "pattern": "Scattering and Gathering",
+    "pattern_id": "P009",
+    "context": "Abiding in the Covenant marks Genesis 48–49 as its entry, and names the Joseph Smith Translation's added verses the covenant the usual list skips. The King James text adopts Ephraim and Manasseh and sets Ephraim first (see Gen.48.1-22). The JST addition, which Latter-day Saints receive as scripture, states why that birthright matters later: temporal salvation becomes the type of spiritual salvation. Not in the Hebrew text; confidence medium.",
+    "echoes": [
+      "Gen.48.1-22",
+      "Gen.45.5-8",
+      "2 Ne.3.4-5",
+      "JST Gen.50.24-33"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "ref": "JST Gen.50.24-33",
+    "covenant": "Abrahamic + LDS-extension",
+    "phase": "formation",
+    "god_obligation": "Remember the broken-off branch in the covenants when the Messiah comes, and raise a choice seer named Joseph to bring Joseph's record to the people who already have Judah's",
+    "people_obligation": "Carry Joseph's bones up; receive the work the seer is commanded to do",
+    "event": "LDS scripture (Joseph Smith Translation): Joseph, dying, says Israel will be scattered again, a branch broken off and carried to a far country, and remembered when the Messiah comes. A choice seer named Joseph will bring the Lord's word to Joseph's seed and convince them of the word already among them. The writing of Joseph's line and the writing of Judah's line grow together",
+    "broken": [],
+    "divine_action": "remembers, guides",
+    "divine_character": "covenant-keeping, sovereignty",
+    "divine_motive": "to keep His word — 'I will remember you from generation to generation'",
+    "delivered": "A preserved branch, a named seer, and two records appointed to become one",
+    "consequence": "The scattering is spoken before it happens, and the gathering is tied to a record as well as a return",
+    "principle": "Joseph's covenant is a branch carried far off, then a record brought back, so Judah and Joseph can be read together.",
+    "pattern": "Scattering and Gathering",
+    "pattern_id": "P009",
+    "context": "The book calls this the missing covenant with Joseph, and 'the story.' It plays the two Josephs as one arc: the granaries that kept a family alive in famine, and the buried record that keeps the covenant alive in a famine of truth. The same joining is what Latter-day Saints hear in the two sticks of Ezekiel 37 (see that note). The JST passage is LDS scripture; it is not in the Hebrew of Genesis 50. Confidence medium.",
+    "echoes": [
+      "Gen.50.24-26",
+      "2 Ne.3.6-15",
+      "Ezek.37.15-28",
+      "Isa.29.11-14"
     ],
     "confidence": "medium"
   },
@@ -1073,6 +1156,85 @@ const LEDGER = [
       "2 Ne.29.1"
     ],
     "confidence": "high"
+  },
+  {
+    "ref": "Jacob.4.15-17",
+    "covenant": "Abrahamic + LDS-extension",
+    "phase": "echo",
+    "god_obligation": "Keep the rejected stone as the sure foundation the builders can still be brought back to",
+    "people_obligation": "Build on the stone rather than stumble over it",
+    "event": "LDS scripture: Jacob says that by their stumbling the Jews will reject the stone on which they might have built. That stone becomes the great, the last, and the only sure foundation. He then asks how, after rejecting it, they can ever build on it so that it becomes the head of the corner",
+    "broken": [],
+    "divine_action": "observes",
+    "divine_character": "mercy, covenant-keeping",
+    "divine_motive": "the question is asked so the allegory can answer it — God's love outlasts the rejection",
+    "delivered": "Not yet a deliverance; a question the rest of the restoration thread exists to answer",
+    "consequence": "The rejection is not the last word. The next chapter is the long labor that brings them back",
+    "principle": "Restoration begins as a question: how can a people build on the stone they have refused?",
+    "pattern": "Scattering and Gathering",
+    "pattern_id": "P009",
+    "context": "Abiding in the Covenant treats Jacob 4:15–17 as the ache the Bible leaves open. Matthew 21 and Isaiah tell the rejection of the messengers and the Son. The Book of Mormon, in the book's reading, tells what God does after that rejection. Jacob 5 is the answer placed immediately after the question. LDS scripture; confidence medium.",
+    "echoes": [
+      "Isa.8.14-15",
+      "Ps.118.22",
+      "Matt.21.42-44",
+      "Jacob.5",
+      "Rom.11.11"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "ref": "Jacob.5",
+    "covenant": "Abrahamic + LDS-extension",
+    "phase": "renewal",
+    "god_obligation": "Nourish the vineyard to the last, graft the scattered natural branches home, and spare the roots",
+    "people_obligation": "The servants labor with the Lord 'this last time'; the trees are to bring forth natural fruit",
+    "event": "LDS scripture: Zenos's allegory, quoted by Jacob. The tame olive tree decays. The Lord prunes, digs, and nourishes it, grafts wild branches in, and hides tame branches in the far parts of the vineyard. Both tame and wild fruit go bad. He weeps and asks what more he could have done. One last time he calls servants, grafts the natural branches back, prunes the bad, and the vineyard brings forth good fruit",
+    "broken": [],
+    "divine_action": "restores, remembers",
+    "divine_character": "mercy, patience, covenant-keeping",
+    "divine_motive": "to spare the roots and the fruit — 'it grieveth me that I should lose' them",
+    "delivered": "A last, successful labor: scattered branches gathered, wild branches kept where they bear good fruit, one vineyard",
+    "consequence": "Restoration: the long scattering ends in a harvest, not in the burning he had the right to order",
+    "principle": "God's last work on Israel is to graft the scattered branches home and keep the roots.",
+    "pattern": "Scattering and Gathering",
+    "pattern_id": "P009",
+    "context": "The book sets three vineyards side by side. Isaiah 5 plants the choice vine and, when it yields wild grapes, breaks the wall. Matthew 21 has the tenants beat the servants and kill the Son, and the vineyard is given to others. Jacob 5 holds the stretch those two do not finish: tame branches hidden in the world (the book reads Lehi's departure, 1 Ne.1–2, as one of those branches), wild branches grafted in, the whole vineyard corrupt, the Lord weeping, and a last nourishing. Pruning is repentance or judgment. Grafting is scattering, adoption, and conversion. Wild fruit is pride and violence. Good fruit is unity, righteousness, and sealing. LDS scripture; confidence medium.",
+    "echoes": [
+      "Isa.5.1-7",
+      "Matt.21.33-43",
+      "Rom.11.17-24",
+      "John.15.1-6",
+      "1 Ne.1.4-2.4",
+      "Jacob.4.15-17"
+    ],
+    "confidence": "medium"
+  },
+  {
+    "ref": "2 Ne.10.7",
+    "covenant": "Abrahamic + Davidic + LDS-extension",
+    "phase": "renewal",
+    "god_obligation": "Restore them to the lands of their inheritance when they believe in Christ",
+    "people_obligation": "Believe that he is Christ",
+    "event": "LDS scripture: the Lord says that when the day comes that they believe in him, that he is Christ, they shall be restored to the lands of their inheritance",
+    "broken": [],
+    "divine_action": "restores, remembers",
+    "divine_character": "covenant-keeping, mercy",
+    "divine_motive": "to keep the covenants made to the fathers — belief and return come together",
+    "delivered": "Judah's gathering named as both a return to Christ and a return to the land",
+    "consequence": "Restoration: the gathering of Ephraim does not replace the gathering of Judah",
+    "principle": "Judah comes home when Judah comes to Christ, and the land of inheritance is part of that coming.",
+    "pattern": "Scattering and Gathering",
+    "pattern_id": "P009",
+    "context": "The book flags this verse, and the footnote it carries back to Genesis 49, as 'exactly the right one.' Genesis 49:10 leaves the sceptre in Judah until Shiloh comes (see Gen.49.8-26). 2 Nephi 10:7 is the book's closing of that line: the return is to the Redeemer and to the inheritance, not to the land alone. Nearby, 2 Ne.9:2 and 2 Ne.25:15–17 say the same thing — scattered among the nations, then remembered when they believe. LDS scripture; confidence medium.",
+    "echoes": [
+      "Gen.49.10",
+      "2 Ne.9.2",
+      "2 Ne.25.15-17",
+      "Isa.11.11-13",
+      "Rom.11.26"
+    ],
+    "confidence": "medium"
   }
 ];
 
@@ -1197,6 +1359,117 @@ const KEY_VERSES = {
   "Isa.11.11-13": {
     "ref": "Isaiah 11:12",
     "text": "And he shall set up an ensign for the nations, and shall assemble the outcasts of Israel, and gather together the dispersed of Judah from the four corners of the earth."
+  },
+  "Isa.65.8-9": {
+    "ref": "Isaiah 65:8",
+    "text": "Thus saith the LORD, As the new wine is found in the cluster, and one saith, Destroy it not; for a blessing is in it: so will I do for my servants' sakes, that I may not destroy them all."
+  },
+  "JST Gen.48.7-11": {
+    "ref": "JST Genesis 48:11",
+    "source": "JST, paraphrased",
+    "text": "Joseph's line is promised as a light that will deliver Israel in captivity and bring salvation when the people are bowed down under sin."
+  },
+  "JST Gen.50.24-33": {
+    "ref": "JST Genesis 50:25",
+    "source": "JST, paraphrased",
+    "text": "A branch is broken off, carried to a far country, and remembered in the Lord's covenants when the Messiah comes."
+  },
+  "Jacob.4.15-17": {
+    "ref": "Jacob 4:17",
+    "source": "Book of Mormon, paraphrased",
+    "text": "Once they have rejected the only sure foundation, how can they ever build on it again?"
+  },
+  "Jacob.5": {
+    "ref": "Jacob 5:41",
+    "source": "Book of Mormon, paraphrased",
+    "text": "The master of the vineyard weeps and asks what more he could have done for it."
+  },
+  "2 Ne.10.7": {
+    "ref": "2 Nephi 10:7",
+    "source": "Book of Mormon, paraphrased",
+    "text": "The day they believe he is Christ is the day they are brought back to the lands of their inheritance."
+  }
+};
+
+// Display only. The restoration reading in Abiding in the Covenant.
+// Not a schema field. Paraphrases of LDS scripture are labeled at the key line.
+const BOOK = {
+  "title": "Abiding in the Covenant: A House of Israel Story",
+  "question": {
+    "ref": "Jacob 4:15–17",
+    "text": "By their stumbling they reject the stone they might have built on. That stone becomes the only sure foundation. How, after rejecting it, can they ever build on it? The book treats the rest of the restoration thread as the answer: the love outlasts the rejection, and the labor of gathering is how they build again."
+  },
+  "chain": [
+    { "name": "Covenant of the Father", "spec": "Before the foundations, a Redeemer is chosen who can satisfy justice and extend mercy. Every later covenant grows from this one.", "refs": "Moses 4:1–2" },
+    { "name": "Promises of the fathers", "spec": "Rights the early patriarchs held for their posterity. The book starts the last scene here as much as at Abraham: hearts turned, or the earth is smitten with a curse.", "refs": "D&C 2; Joseph Smith—History 1:39" },
+    { "name": "Adam", "spec": "The first earthly spec is sacrifice, a similitude of the Only Begotten, so the fallen world is tied back to the Father's covenant.", "refs": "Moses 5:5–8" },
+    { "name": "Enoch", "spec": "Zion, one heart and one mind. God covenants that this city returns. The standard in the west is read against that return.", "refs": "Moses 7" },
+    { "name": "Noah", "spec": "The earth is kept as a place where the partnership can continue. The book sees the flood as the vineyard's first cleansing: a remnant spared, the Master weeping at the trunk.", "refs": "Genesis 6:18; 9:11, 15" },
+    { "name": "Abraham, Isaac, Jacob", "spec": "A family chosen to bless all families. Stars and sand. The oath is renewed to Isaac and to Jacob. The book opens on Abraham counting stars.", "refs": "Genesis 15; 17; 26:3; 28:13–15" },
+    { "name": "Joseph", "spec": "The covenant the book says the usual list skips, and the one it calls the story. Joseph saves the house from famine, so his seed is appointed to save Israel when they are bowed under sin. A branch is broken off and carried far away, then remembered. A choice seer named Joseph brings Joseph's record to a people who already have Judah's, and the two grow together.", "refs": "JST Genesis 48:7–11; 50:24–33" },
+    { "name": "Sinai", "spec": "A peculiar treasure and a kingdom of priests, if they will obey. Renewed on the plains of Moab, and again when Josiah finds the book of the law.", "refs": "Exodus 19:5–6; Deuteronomy 29:12; 2 Kings 23:3" },
+    { "name": "David", "spec": "The throne and the kingdom secured for a son of David. Leadership of the people, not a replacement of the family covenant.", "refs": "2 Samuel 7:12–16; Jeremiah 33:21" },
+    { "name": "New covenant", "spec": "The law moves from the stone tablets broken in Exodus 32 into the inward parts. The book sets the ratification in the same breath: the cup is the new covenant in his blood.", "refs": "Jeremiah 31:31–33; Luke 22:20" }
+  ],
+  "arc": [
+    { "name": "Premortal council", "detail": "The covenant is declared and the Savior is chosen." },
+    { "name": "Adam and Eve", "detail": "First sacrifice, before the law of Moses. Faith in Christ acted out at an altar." },
+    { "name": "Enoch", "detail": "Zion is taken. The world grows violent." },
+    { "name": "Noah", "detail": "The vineyard rots and is cleansed by water. A remnant is kept." },
+    { "name": "Abraham", "detail": "The promise that his seed will bless all nations. Stars and sand." },
+    { "name": "Joseph of Egypt", "detail": "Fruit preserved in famine. The book reads him as the type of a later Joseph who preserves the covenant in a famine of truth." },
+    { "name": "Isaiah", "detail": "He sees the vineyard, the Servant, and a marvelous work. His household carries the promises in their names: Shear-jashub, a remnant shall return." },
+    { "name": "Lehi", "detail": "A branch of Joseph led out of Jerusalem as the city falls. The book counts this among the tame branches hidden in the far vineyard." },
+    { "name": "Jacob and the olive tree", "detail": "Zenos's allegory, in Jacob's mouth: decay, grafting, scattering, the Lord's grief, and one last nourishing." },
+    { "name": "Christ among the covenant people", "detail": "The Son the tenants kill is also the Holy One who stands in the vineyard. Brief flourishing, then the fruit goes bad again." },
+    { "name": "Apostasy", "detail": "The branches overrun the roots. What more could he have done?" },
+    { "name": "The records brought together", "detail": "Joseph's record comes forth to meet Judah's. The book treats this as the grafting of natural branches, the sealed book of Isaiah 29 opened, not as a second story beside Israel's." },
+    { "name": "Gathering", "detail": "Judah and the nations. Gentiles grafted in, as in Romans 11. The book's last labor is temple and sealing: the promises of the fathers, hearts turned." }
+  ],
+  "symbols": [
+    { "name": "Tree, vineyard", "means": "the house of Israel, and a family line" },
+    { "name": "Pruning", "means": "repentance, or judgment" },
+    { "name": "Grafting", "means": "scattering, adoption, conversion" },
+    { "name": "Wild fruit", "means": "pride, apostasy, violence" },
+    { "name": "Good fruit", "means": "unity, righteousness, sealing" },
+    { "name": "Servants", "means": "the prophets, sent and refused" },
+    { "name": "The Son", "means": "the Holy One, sent after the servants" },
+    { "name": "Remnant branch", "means": "what is carried out of the ruined vineyard and sprouts again" },
+    { "name": "Two sticks", "means": "Judah's record and Joseph's record becoming one" }
+  ],
+  "order": [
+    "JST Gen.48.7-11",
+    "JST Gen.50.24-33",
+    "Jacob.4.15-17",
+    "Jacob.5",
+    "Ezek.37.15-28",
+    "Isa.11.11-13",
+    "2 Ne.10.7"
+  ],
+  "details": {
+    "Isa.40.1-11": "Isaiah is the book's poet-seer: he watches the vineyard and still announces comfort. Shear-jashub, 'a remnant shall return,' carries that promise as a son's name. The highway in the wilderness is the Master leading the family home after the wall is broken, not a new people put in place of the old one.",
+    "Isa.41.8-20": "The book opens on Abraham being told to count the stars. This oracle argues the restoration from that oath — Israel is the seed of Abraham, God's friend — and not from the nation's present strength. Pools in the wilderness are the same nourishing the allegory gives a failing tree.",
+    "Isa.42.1-9": "The Servant is the Son the vineyard story keeps sending. Servants are beaten; then the Son comes. His way here is quiet: a bruised reed is not broken. The book takes 'a covenant of the people' to mean the covenant has become a person, and a light beyond Israel.",
+    "Isa.43.1-7": "Redeem is family language, the kinsman buying his own back. The book holds Israel as a family from the council to the last gathering, and this naming is how the scattered are claimed from every direction.",
+    "Isa.43.14-21": "The book's Babylon sequence: the wall comes down, the branch is carried off, and then a new thing. 'Remember ye not the former things' is a second exodus, on the pattern of the sea and larger than it.",
+    "Isa.65.8-9": "The turn the book holds still. The cluster looks dead, and a voice says not to destroy it, because a blessing is in it. A sprout in dry wood. God will not make an end of them all. A seed comes out of Jacob. This is Isaiah 5's ruined vineyard refused as the last scene.",
+    "Ezek.36.22-32": "The book reads this as the move from the tablets Moses broke to a heart that can bear fruit. Pruning, in the allegory, is this cutting: not the end of the tree. The motive is his name among the nations, the same plea Moses made when God offered to start over.",
+    "Ezek.37.1-14": "After the apostasy beat, the bones say their hope is lost. The book answers with breath. Wind, breath, and spirit are one word here, so the last labor on the vineyard is not a better fence. It is life put back into what looked dead.",
+    "Ezek.37.15-28": "The book's shorthand is two sticks in one hand. Judah's writing and Joseph's writing grow together, which is the promise it hears in the Joseph covenant. One king, one heart, the envy gone. The divided-kingdom thread ends in this joining.",
+    "Jer.31.1-17": "Rachel, mother of Joseph, weeps, and the book sets that beside the keeper of the vineyard weeping over lost fruit and refusing the loss. Ephraim is the son brought back. The God who scattered is the shepherd who gathers. The love is everlasting, which is as far back as the covenant goes.",
+    "Jer.31.31-34": "The last covenant in the book's chain. Not Sinai again: a new covenant with Israel and with Judah, the law in the inward parts. The book sets Luke 22:20 in the same breath, the cup as the ratification, and the doctrine of Christ as the way that covenant is lived.",
+    "Mal.3.1-6": "The refiner's fire is the last pruning, and he comes to his temple. Levi, set apart in the golden-calf crisis, is purified so the offering is pleasant as in the days of old — back at the first altar. 'I change not' is why the sons of Jacob are not consumed.",
+    "Mal.4.1-4": "One day and two endings, matching the allegory's last harvest: wild fruit burned, the God-fearing healed. The close of the prophets sends Israel back to Horeb to remember the law that began the story.",
+    "Mal.4.5-6": "The book begins here as well as with Abraham. The promises of the fathers are what Elijah is sent to turn the generations toward, so the day is not a curse. The last beat of the thirteen calls this the sealing.",
+    "Mark.1.1-8": "The forerunner stands in Elijah's rough garment, in the wilderness Isaiah named. The book treats the sequence as kept in order: the messenger, then the Lord.",
+    "Matt.12.15-21": "Matthew names Jesus as Isaiah's Servant. The book lays Matthew 21 beside Jacob 5 here: the vineyard passes to others, and wild branches are grafted in. The Servant's quietness is how that widening happens.",
+    "Luke.22.19-20": "The book quotes the cup as the moment the new covenant is ratified. It answers Jeremiah's promise and Moses' offer, in Exodus 32, to be blotted out for the people — an offer refused because the substitute who could bear the guilt had not yet come.",
+    "Isa.11.11-13": "A second recovery, an ensign, and the envy between Ephraim and Judah ended. The book pairs this with Judah's return: distance from the land is healed, and so is the rivalry. The Lehite record repeats the oracle in 2 Nephi 21.",
+    "JST Gen.48.7-11": "The book's entry. Joseph kept the family alive through the famine, and these added verses say his seed will deliver Israel when they are bowed down under sin. Saving the house in time becomes the pattern of saving the house from sin. Ephraim is set first because that deliverance runs through him.",
+    "JST Gen.50.24-33": "The book calls this the missing covenant, and the story. A branch is broken off and carried far away, then remembered when the Messiah comes. A choice seer named Joseph brings Joseph's record to people who already have Judah's record, and the two grow together. Granaries, then the buried plates: one arc, a family preserved, then a covenant preserved.",
+    "Jacob.4.15-17": "The question the book will not leave. They rejected the stone. The stone is still the only foundation. How can they build on it now? Restoration, in this mode, is that question kept in front of every promise that follows.",
+    "Jacob.5": "Isaiah 5 plants the vine and breaks the wall. Matthew 21 has the tenants kill the servants and the Son. Jacob 5 is the long middle: tame branches hidden in the world, wild branches grafted in, the whole vineyard gone bad, the Lord weeping, and one last time — servants called, natural branches grafted home, bad fruit pruned, good fruit kept. The book says this is what happens after the rejection.",
+    "2 Ne.10.7": "The verse the book marks, with its footnote back to Genesis 49, as exactly the right one. Judah's return is to Christ and to the lands of inheritance together. The sceptre staying in Judah until Shiloh comes is the line this verse closes. Gathering Ephraim is not a substitute for gathering Judah."
   }
 };
 
@@ -1211,11 +1484,12 @@ const MANIFEST = {
       "chapters_total": 50,
       "chapters_covered": [
         48,
-        49
+        49,
+        50
       ],
-      "chapter_coverage_pct": 4.0,
-      "notes": 2,
-      "restoration_notes": 0,
+      "chapter_coverage_pct": 6.0,
+      "notes": 4,
+      "restoration_notes": 2,
       "status": "partial"
     },
     {
@@ -1283,11 +1557,12 @@ const MANIFEST = {
         40,
         41,
         42,
-        43
+        43,
+        65
       ],
-      "chapter_coverage_pct": 7.6,
-      "notes": 6,
-      "restoration_notes": 6,
+      "chapter_coverage_pct": 9.1,
+      "notes": 7,
+      "restoration_notes": 7,
       "status": "partial"
     },
     {
@@ -1396,6 +1671,33 @@ const MANIFEST = {
       "notes": 1,
       "restoration_notes": 0,
       "status": "partial"
+    },
+    {
+      "book": "Jacob",
+      "abbrev": "Jacob",
+      "canon": "Book of Mormon (LDS scripture)",
+      "chapters_total": 7,
+      "chapters_covered": [
+        4,
+        5
+      ],
+      "chapter_coverage_pct": 28.6,
+      "notes": 2,
+      "restoration_notes": 2,
+      "status": "partial"
+    },
+    {
+      "book": "2 Nephi",
+      "abbrev": "2 Ne",
+      "canon": "Book of Mormon (LDS scripture)",
+      "chapters_total": 33,
+      "chapters_covered": [
+        10
+      ],
+      "chapter_coverage_pct": 3.0,
+      "notes": 1,
+      "restoration_notes": 1,
+      "status": "partial"
     }
   ]
 };
@@ -1442,15 +1744,35 @@ for (const n of LEDGER) {
     <div class="field"><b>Broken</b><div class="tag-list">${n.broken.map(b => `<span class="tag">${b}</span>`).join('') || '<span class="tag">—</span>'}</div></div>
     <div class="field"><b>Echoes</b><div class="tag-list">${n.echoes.map(e => `<span class="tag">${e}</span>`).join('')}</div></div>
     <div class="field"><b>Confidence</b>${n.confidence}</div>
+    ${BOOK.details[n.ref] ? `<div class="field"><b>From the book</b>${BOOK.details[n.ref]}</div>` : ''}
   `;
   notesEl.appendChild(div);
 }
 
-// Restoration thread (gospel mode main panel), grouped by theme line (pattern)
+// Book base: the covenant chain, the thirteen beats, and the vineyard vocabulary.
+const bookBase = document.getElementById('bookBase');
+bookBase.innerHTML =
+  `<p class="q"><span class="r">${BOOK.question.ref}.</span> ${BOOK.question.text}</p>` +
+  `<h3>Covenant chain</h3><ol class="chain">` +
+  BOOK.chain.map(c => `<li><b>${c.name}.</b> ${c.spec} <span class="r">${c.refs}</span></li>`).join('') +
+  `</ol><h3>Thirteen beats</h3><ol class="arc">` +
+  BOOK.arc.map(a => `<li><b>${a.name}.</b> ${a.detail}</li>`).join('') +
+  `</ol><h3>Vineyard, as the book uses it</h3><ul class="symbols">` +
+  BOOK.symbols.map(s => `<li><b>${s.name}.</b> ${s.means}</li>`).join('') +
+  `</ul>`;
+
+// Restoration thread (gospel mode main panel), grouped by theme line (pattern).
+// Inside a pattern, the book's order leads; other notes keep ledger order.
+const bookRank = ref => {
+  const i = BOOK.order.indexOf(ref);
+  return i === -1 ? 1000 : i;
+};
 const restoEl = document.getElementById('restoThread');
 for (const [pid, p] of Object.entries(PATTERNS)) {
   if (!p.restoration) continue;
-  const items = LEDGER.filter(n => n.pattern_id === pid);
+  const items = LEDGER.filter(n => n.pattern_id === pid)
+    .slice()
+    .sort((a, b) => bookRank(a.ref) - bookRank(b.ref) || LEDGER.indexOf(a) - LEDGER.indexOf(b));
   if (!items.length) continue;
   const g = document.createElement('div');
   g.className = 'resto-group'; g.dataset.pattern = pid;
@@ -1458,11 +1780,13 @@ for (const [pid, p] of Object.entries(PATTERNS)) {
   for (const n of items) {
     const kv = KEY_VERSES[n.ref];
     const nt = n.echoes.filter(e => /^(Matt|Mark|Luke|John|Acts|Rom|1 Cor|2 Cor|Gal|Eph|Phil|Col|Heb|Jas|1 Pet|2 Pet|Rev|Titus)\./.test(e));
+    const detail = BOOK.details[n.ref];
     const it = document.createElement('div');
     it.className = 'resto-item';
     it.innerHTML = `<div class="r">${n.ref} · ${n.covenant} · ${n.phase}</div>` +
-      (kv ? `<blockquote>“${kv.text}” <span class="r">(${kv.ref}, KJV)</span></blockquote>` : '') +
+      (kv ? `<blockquote>“${kv.text}” <span class="r">(${kv.ref}, ${kv.source || 'KJV'})</span></blockquote>` : '') +
       `<div class="p">${n.principle}</div>` +
+      (detail ? `<div class="bd">${detail}</div>` : '') +
       (nt.length ? `<div class="nt">NT: ${nt.join(', ')}</div>` : '');
     it.addEventListener('click', () => {
       const el = document.getElementById(noteId(n.ref));
@@ -1506,7 +1830,7 @@ document.querySelectorAll('.toolbar button').forEach(btn => {
     document.getElementById('rawjson').classList.toggle('hidden', view !== 'data');
     document.getElementById('sidebarTitle').textContent = resto ? 'Restoration Notes' : 'Covenant Notes';
     if (view === 'data') {
-      document.getElementById('rawjson').textContent = JSON.stringify({ text: TEXT, ledger: LEDGER, patterns: PATTERNS, key_verses: KEY_VERSES, manifest: MANIFEST }, null, 2);
+      document.getElementById('rawjson').textContent = JSON.stringify({ text: TEXT, ledger: LEDGER, patterns: PATTERNS, key_verses: KEY_VERSES, book: BOOK, manifest: MANIFEST }, null, 2);
     }
   });
 });
